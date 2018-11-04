@@ -45,6 +45,7 @@ public class LobeInterpTest
         Lobe Lobe = LobeInterpreter.LobeFromGene(LobeGene);
         Assert.AreEqual(Lobe.Dimension.x, Dimension.x);
         Assert.AreEqual(Lobe.Dimension.y, Dimension.y);
+        Assert.AreEqual(12, Lobe.Size);
         yield return null;
     }
 }
