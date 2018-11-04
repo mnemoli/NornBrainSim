@@ -1,0 +1,14 @@
+{
+    "name": "Tests",
+    "references": [
+        "Creatures"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}
