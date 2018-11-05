@@ -1,10 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.TestTools;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Collections;
-using Creatures;
 using System.Linq;
-using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.TestTools;
 
 public class BrainTest
 { 

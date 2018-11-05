@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Creatures;
 using System.Linq;
 
 public class Creature : MonoBehaviour {
