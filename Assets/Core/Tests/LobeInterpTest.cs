@@ -2,34 +2,38 @@
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections;
-using Creatures;
-using System.Collections.Generic;
+using System.Linq;
 
 public class LobeInterpTest
 {
-
-    public LobeInterpreter LobeInterpreter;
-
+    private RawGene LobeGene;
     [SetUp]
-    public void MakeInterpreter()
+    public void SetUp()
     {
-        const string FileLocation = "F:\\Jade\\Documents\\Unity Projects\\BrainSim2\\Assets\\Genes\\norn.gen";
-        GeneFileLoader g = GeneFileLoader.CreateNew(FileLocation);
-        LobeInterpreter = ScriptableObject.CreateInstance<LobeInterpreter>();
+        LobeGene = new RawGene(Enumerable.Repeat<byte>(0, 200).ToArray<byte>());
+    }
+
+    [UnityTest]
+    public IEnumerator LobeID()
+    {
+        LobeGene[2] = 7;
+
+        var InterpretedGene = LobeInterpreter.Interpret(LobeGene);
+        Assert.AreEqual((BrainLobeType)7, InterpretedGene.LobeID);
+
+        yield return null;
     }
 
     [UnityTest]
     public IEnumerator LobeLocation()
     {
         Vector2Int Location = new Vector2Int(1, 2);
-        var GeneBytes = new byte[16];
-        GeneBytes[7] = (byte)Location.x;
-        GeneBytes[8] = (byte)Location.y;
-        Gene LobeGene = new Gene(GeneBytes);
+        LobeGene[7] = (byte)Location.x;
+        LobeGene[8] = (byte)Location.y;
 
-        Lobe Lobe = LobeInterpreter.LobeFromGene(LobeGene);
-        Assert.AreEqual(Lobe.Location.x, Location.x);
-        Assert.AreEqual(Lobe.Location.y, Location.y);
+        var InterpretedGene = LobeInterpreter.Interpret(LobeGene);
+        Assert.AreEqual(Location, InterpretedGene.Location);
+
         yield return null;
     }
 
@@ -37,15 +41,12 @@ public class LobeInterpTest
     public IEnumerator LobeDimensions()
     {
         Vector2Int Dimension = new Vector2Int(3, 4);
-        var GeneBytes = new byte[16];
-        GeneBytes[9] = (byte)Dimension.x;
-        GeneBytes[10] = (byte)Dimension.y;
-        Gene LobeGene = new Gene(GeneBytes);
+        LobeGene[9] = (byte)Dimension.x;
+        LobeGene[10] = (byte)Dimension.y;
 
-        Lobe Lobe = LobeInterpreter.LobeFromGene(LobeGene);
-        Assert.AreEqual(Lobe.Dimension.x, Dimension.x);
-        Assert.AreEqual(Lobe.Dimension.y, Dimension.y);
-        Assert.AreEqual(12, Lobe.Size);
+        var InterpretedGene = LobeInterpreter.Interpret(LobeGene);
+        Assert.AreEqual(Dimension, InterpretedGene.Dimension);
+
         yield return null;
     }
 }

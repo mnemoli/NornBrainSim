@@ -2,19 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gene : List<byte>
-{
-    public Gene(byte[] bytes) : base(bytes)
-    {
-    }
+public class Gene  {
 
-    public Gene() : base()
-    {
-
-    }
-
-    public Gene(int capacity) : base(capacity)
-    {
-
-    }
 }
