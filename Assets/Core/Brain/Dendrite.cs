@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Dendrite  {
-    private readonly Lobe SourceLobe;
+    public Lobe SourceLobe;
+    public readonly BrainLobeType SourceLobeIndex;
     public readonly int SourceNeuronIndex;
 
-    public Dendrite(Lobe sourceLobe, int sourceNeuronIndex)
+    public Dendrite(BrainLobeType sourceLobeIndex, int sourceNeuronIndex)
     {
-        SourceLobe = sourceLobe;
+        SourceLobeIndex = sourceLobeIndex;
         SourceNeuronIndex = sourceNeuronIndex;
     }
 }

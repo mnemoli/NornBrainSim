@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Collections;
 using UnityEngine.TestTools;
 
 public class NeuronTest
@@ -12,15 +13,19 @@ public class NeuronTest
         Neuron = new Neuron(0, NeuronGene);
     }
     [UnityTest]
-    public void NeuronAboveThreshold()
+    public IEnumerator NeuronAboveThreshold()
     {
         Neuron.Fire(150);
-        Assert.Equals(150, Neuron.Value);
+        Assert.AreEqual(150, Neuron.Value);
+
+        yield return null;
     }
     [UnityTest]
-    public void NeuronBelowThreshold()
+    public IEnumerator NeuronBelowThreshold()
     {
         Neuron.Fire(50);
-        Assert.Equals(0, Neuron.Value);
+        Assert.AreEqual(0, Neuron.Value);
+
+        yield return null;
     }
 }

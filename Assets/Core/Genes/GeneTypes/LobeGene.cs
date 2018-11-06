@@ -8,6 +8,13 @@ public class LobeGene : Gene
     public readonly DendriteGene Dendrite0;
     public readonly DendriteGene Dendrite1;
     public readonly NeuronGene NeuronGene;
+    public int NumNeurons
+    {
+        get
+        {
+            return Dimension.x * Dimension.y;
+        }
+    }
 
     public LobeGene(BrainLobeType lobeID, Vector2Int location, Vector2Int dimension, DendriteGene dendrite0, DendriteGene dendrite1, NeuronGene neuronGene)
     {

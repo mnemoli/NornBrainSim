@@ -12,5 +12,6 @@ public enum BrainLobeType
     Sensory,
     Decision,
     Attention,
-    Concept
+    Concept,
+    Regulator
 }

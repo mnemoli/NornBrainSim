@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Neuron : ScriptableObject {
+public class Neuron {
     private int value;
     public int Value {
         get

@@ -19,7 +19,7 @@ public class LobeBuilderTest
         var Location = new Vector2Int(1, 2);
         var Dimension = new Vector2Int(3, 4);
         LobeGene Gene = new LobeGene(BrainLobeType.Concept, Location, Dimension, null, null, null);
-        var Lobe = LobeBuilder.BuildFromGene(Gene, Brain);
+        var Lobe = LobeBuilder.BuildFromGene(Gene, 25, 25);
         Assert.AreEqual(BrainLobeType.Concept, Lobe.LobeID);
         Assert.AreEqual(Location, Lobe.Location);
         Assert.AreEqual(Dimension, Lobe.Dimension);
