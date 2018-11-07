@@ -76,7 +76,8 @@ public class Lobe {
 
     public void Render()
     {
-        LobeRenderer.Render(Location, Dimension);
+        
+        LobeRenderer.Render(Location, Dimension, typeof(StimulusGenus), GetFiringNeuron().Index);
     }
 
     public void RenderDendrites()
