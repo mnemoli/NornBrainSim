@@ -24,6 +24,14 @@ public class Lobe {
         Neurons = neurons;
     }
 
+    public void Process()
+    {
+        foreach(var Neuron in Neurons)
+        {
+            Neuron.Process();
+        }
+    }
+
     public void FireNeuron(int neuronIndex)
     {
         Neurons[neuronIndex].Fire(255);

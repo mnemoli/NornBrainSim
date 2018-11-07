@@ -39,6 +39,7 @@ public class Dendrite  {
     {
         RelaxLTWToSTW();
         RelaxSusceptibility();
+        CalculateSusceptibility(owningNeuron);
     }
 
     private void RelaxLTWToSTW()
@@ -53,12 +54,15 @@ public class Dendrite  {
 
     private void CalculateSusceptibility(Neuron owningNeuron = null)
     {
-        var DataPacket = new SVDataPacket();
-        DataPacket.Susceptibility = Mathf.RoundToInt(Susceptibility);
-        DataPacket.NeuronInput = Mathf.RoundToInt(owningNeuron.Input);
-        DataPacket.NeuronOutput = Mathf.RoundToInt(owningNeuron.Value);
-        DataPacket.State = Mathf.RoundToInt(owningNeuron.RawValue);
+        if(owningNeuron != null)
+        {
+            var DataPacket = new SVDataPacket();
+            DataPacket.Susceptibility = Mathf.RoundToInt(Susceptibility);
+            DataPacket.NeuronInput = Mathf.RoundToInt(owningNeuron.Input);
+            DataPacket.NeuronOutput = Mathf.RoundToInt(owningNeuron.Value);
+            DataPacket.State = Mathf.RoundToInt(owningNeuron.RawValue);
 
-        Susceptibility = DendriteGene.Dynamics.SusceptibilitySVRule.Evaluate(DataPacket);
+            Susceptibility = DendriteGene.Dynamics.SusceptibilitySVRule.Evaluate(DataPacket);
+        }
     }
 }

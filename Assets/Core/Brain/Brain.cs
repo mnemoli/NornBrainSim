@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Brain : MonoBehaviour {
@@ -11,6 +12,11 @@ public class Brain : MonoBehaviour {
         {
             return Lobes.Count;
         }
+    }
+
+    public void FixedUpdate()
+    {
+        Lobes.ForEach(l => l.Process());
     }
 
     public virtual Lobe LobeFromIndex(BrainLobeType index)

@@ -44,7 +44,7 @@ public class DendriteTest
     {
         var LTWGainRate = 16;
         var Start = 255;
-        var End = 2;
+        var End = 3;
         var DynamicsGene = new DendriteDynamicsGene(LTWGainRate, 0, null);
         DendriteGene DendriteGene = new DendriteGene(0, DendriteGene.SpreadType.Flat, new Vector2Int(0, 0), new Vector2Int(Start, Start), new Vector2Int(1, 1), DynamicsGene);
         TestDendrite Dendrite = new TestDendrite(0, 0, DendriteGene);

@@ -42,6 +42,33 @@ public class Neuron {
         Gene = neuronGene;
     }
 
+    public void Process()
+    {
+        if(Dendrites0 != null && Dendrites1 != null)
+        {
+            foreach (var Dendrite in Dendrites0)
+            {
+                Dendrite.Process(this);
+            }
+            foreach (var Dendrite in Dendrites1)
+            {
+                Dendrite.Process(this);
+            }
+
+            value = GetDendrite0Values() - GetDendrite1Values();
+        }
+    }
+
+    private float GetDendrite0Values()
+    {
+        return Dendrites0.Aggregate(0f, (agg, n) => agg + n.GetValue());
+    }
+
+    private float GetDendrite1Values()
+    {
+        return Dendrites0.Aggregate(0f, (agg, n) => agg + n.GetValue());
+    }
+
     public void Fire(int strength)
     {
         Value = strength;

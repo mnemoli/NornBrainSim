@@ -7,21 +7,21 @@ public class True : OpCode
     {
         if(data.Result > 0)
         {
-            return data.Result;
+            return operands[0].Evaluate(data, null);
         }
         else
         {
-            throw new System.Exception("Result not over zero");
+            throw new EndNoValueException();
         }
     }
 
     public bool IsOperator()
     {
-        return false;
+        return true;
     }
 
     public int OperandsRequired()
     {
-        return 0;
+        return 1;
     }
 }
