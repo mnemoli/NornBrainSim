@@ -33,6 +33,11 @@ public class Lobe {
     {
         return Neurons.OrderByDescending(n => n.Value).First();
     }
+
+    public float GetValueOfNeuron(int index)
+    {
+        return Neurons[index].Value;
+    }
     
     public void SetUpDendrites(Brain brain)
     {
@@ -46,14 +51,14 @@ public class Lobe {
             {
                 foreach (var Dendrite0 in Neuron.Dendrites0)
                 {
-                    Dendrite0.SourceLobe = brain.LobeFromIndex(Dendrite0.SourceLobeIndex);
+                    Dendrite0.SetSourceLobe(brain.LobeFromIndex(Dendrite0.SourceLobeIndex));
                 }
             }
             if (Neuron.Dendrites1 != null)
             {
                 foreach (var Dendrite1 in Neuron.Dendrites1)
                 {
-                    Dendrite1.SourceLobe = brain.LobeFromIndex(Dendrite1.SourceLobeIndex);
+                    Dendrite1.SetSourceLobe(brain.LobeFromIndex(Dendrite1.SourceLobeIndex));
                 }
             }
             

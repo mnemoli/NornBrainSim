@@ -4,8 +4,8 @@ using System.Linq;
 using UnityEngine;
 
 public class Neuron {
-    private int value;
-    public int Value {
+    private float value = 0;
+    public float Value {
         get
         {
             return (value > Gene.Threshold ? value : 0);

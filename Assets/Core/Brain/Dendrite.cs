@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Dendrite  {
-    public Lobe SourceLobe;
+    public Lobe SourceLobe { get; private set; }
     public readonly BrainLobeType SourceLobeIndex;
     public readonly int SourceNeuronIndex;
     private readonly DendriteGene DendriteGene;
-    public float LTW { get; private set; }
-    public float STW { get; private set; }
+    public float LTW { get; protected set; }
+    public float STW { get; protected set; }
     private int Strength;
 
     private static readonly float RelaxationModifier = 6f;
+    private static readonly float STWModifier = 255f;
 
     public Dendrite(BrainLobeType sourceLobeIndex, int sourceNeuronIndex, DendriteGene gene)
     {
@@ -21,6 +22,16 @@ public class Dendrite  {
         LTW = gene.InitialLTW;
         STW = gene.InitialLTW;
         Strength = gene.InitialStrength;
+    }
+
+    public void SetSourceLobe(Lobe lobe)
+    {
+        SourceLobe = lobe;
+    }
+
+    public float GetValue()
+    {
+        return SourceLobe.GetValueOfNeuron(SourceNeuronIndex) * (STW / STWModifier);
     }
 
     public void Process()
@@ -35,10 +46,5 @@ public class Dendrite  {
             float t = RelaxationModifier * (1f / DendriteGene.Dynamics.LTWGainRate);
             LTW = Mathf.Lerp(LTW, STW, t);
         } 
-    }
-
-    public void MockSTW(int stw)
-    {
-        STW = stw;
     }
 }
