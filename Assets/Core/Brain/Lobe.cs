@@ -34,12 +34,20 @@ public class Lobe {
 
     public void FireNeuron(int neuronIndex)
     {
-        Neurons[neuronIndex].Fire(255);
+        Neurons[neuronIndex].SetStrength(255);
     }
 
     public Neuron GetFiringNeuron()
     {
-        return Neurons.OrderByDescending(n => n.Value).First();
+        var N = Neurons.OrderByDescending(n => n.Value).First();
+        if (N.Value > 0)
+        {
+            return N;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public float GetValueOfNeuron(int index)
@@ -76,8 +84,9 @@ public class Lobe {
 
     public void Render()
     {
-        
-        LobeRenderer.Render(Location, Dimension, typeof(StimulusGenus), GetFiringNeuron().Index);
+        var Neuron = GetFiringNeuron();
+        var NeuronIndex = (Neuron == null) ? -1 : Neuron.Index;
+        LobeRenderer.Render(Location, Dimension, typeof(StimulusGenus), NeuronIndex);
     }
 
     public void RenderDendrites()

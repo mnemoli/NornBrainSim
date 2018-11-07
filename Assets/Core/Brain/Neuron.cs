@@ -8,7 +8,7 @@ public class Neuron {
     public float Value {
         get
         {
-            return (value > Gene.Threshold ? value : 0);
+            return (value > Gene.Threshold) ? value : Gene.RestState;
         }
         private set
         {
@@ -37,13 +37,15 @@ public class Neuron {
 
     public Neuron(int index, NeuronGene neuronGene)
     {
-        Value = 0;
+        Value = neuronGene.RestState;
         Index = index;
         Gene = neuronGene;
     }
 
     public void Process()
     {
+        value = ProcessLeakage();
+
         if(Dendrites0 != null && Dendrites1 != null)
         {
             foreach (var Dendrite in Dendrites0)
@@ -55,7 +57,19 @@ public class Neuron {
                 Dendrite.Process(this);
             }
 
-            value = GetDendrite0Values() - GetDendrite1Values();
+            //value = ProcessStateRule();
+        }
+    }
+
+    private float ProcessLeakage()
+    {
+        if(Gene.Leakage == 0)
+        {
+            return Gene.RestState;
+        }
+        else
+        {
+            return Relaxer.Relax(6, Gene.Leakage, value, Gene.RestState);
         }
     }
 
@@ -69,7 +83,7 @@ public class Neuron {
         return Dendrites0.Aggregate(0f, (agg, n) => agg + n.GetValue());
     }
 
-    public void Fire(int strength)
+    public void SetStrength(int strength)
     {
         Value = strength;
     }

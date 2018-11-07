@@ -9,6 +9,7 @@ public class NeuronInterpreter
     {
         int Threshold = gene[12];
         int RestState = gene[14];
-        return new NeuronGene(Threshold, RestState);
+        int Leakage = gene[13];
+        return new NeuronGene(Threshold, RestState, Leakage);
     }
 }

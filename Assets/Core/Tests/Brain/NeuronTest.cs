@@ -9,13 +9,13 @@ public class NeuronTest
     [SetUp]
     public void CreateNeuron()
     {
-        var NeuronGene = new NeuronGene(100, 0);
+        var NeuronGene = new NeuronGene(100, 0, 0);
         Neuron = new Neuron(0, NeuronGene);
     }
     [UnityTest]
     public IEnumerator NeuronAboveThreshold()
     {
-        Neuron.Fire(150);
+        Neuron.SetStrength(150);
         Assert.AreEqual(150, Neuron.Value);
 
         yield return null;
@@ -23,7 +23,7 @@ public class NeuronTest
     [UnityTest]
     public IEnumerator NeuronBelowThreshold()
     {
-        Neuron.Fire(50);
+        Neuron.SetStrength(50);
         Assert.AreEqual(0, Neuron.Value);
 
         yield return null;
