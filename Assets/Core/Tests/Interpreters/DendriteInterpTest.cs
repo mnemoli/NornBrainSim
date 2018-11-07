@@ -66,4 +66,44 @@ public class DendriteInterpTest {
 
         yield return null;
     }
+
+    [UnityTest]
+    public IEnumerator DendriteStrengthRange()
+    {
+        LobeGene[36] = 2;
+        LobeGene[37] = 3;
+        LobeGene[123] = 4;
+        LobeGene[124] = 5;
+
+        var InterpretedGene = DendriteInterpreter.Interpret(LobeGene);
+        var Den0 = InterpretedGene[0];
+        var Den1 = InterpretedGene[1];
+
+        Assert.AreEqual(2, Den0.StrengthRange.x);
+        Assert.AreEqual(3, Den0.StrengthRange.y);
+        Assert.AreEqual(4, Den1.StrengthRange.x);
+        Assert.AreEqual(5, Den1.StrengthRange.y);
+
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator DendriteLTWRange()
+    {
+        LobeGene[34] = 2;
+        LobeGene[35] = 3;
+        LobeGene[121] = 4;
+        LobeGene[122] = 5;
+
+        var InterpretedGene = DendriteInterpreter.Interpret(LobeGene);
+        var Den0 = InterpretedGene[0];
+        var Den1 = InterpretedGene[1];
+
+        Assert.AreEqual(2, Den0.LTWRange.x);
+        Assert.AreEqual(3, Den0.LTWRange.y);
+        Assert.AreEqual(4, Den1.LTWRange.x);
+        Assert.AreEqual(5, Den1.LTWRange.y);
+
+        yield return null;
+    }
 }

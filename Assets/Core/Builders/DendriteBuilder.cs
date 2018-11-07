@@ -20,7 +20,7 @@ public class DendriteBuilder {
         }
         foreach (var r in Enumerable.Range(0, gene.NumDendrites))
         {
-            Dendrites.Add(new Dendrite(gene.SourceLobeIndex, SourceNeuronIndex));
+            Dendrites.Add(new Dendrite(gene.SourceLobeIndex, SourceNeuronIndex, gene));
         }
         return Dendrites;
     }

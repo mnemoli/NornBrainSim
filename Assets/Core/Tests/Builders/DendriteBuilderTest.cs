@@ -13,11 +13,18 @@ public class DendriteBuilderTest
             return new Lobe(BrainLobeType.Attention, new Vector2Int(0, 0), new Vector2Int(0, 0), null);
         }
     }
+
+    private DendriteGene MakeGene(int numDendrites)
+    {
+        var Dynamics = new DendriteDynamicsGene(1);
+        return new DendriteGene(0, DendriteGene.SpreadType.Flat, new Vector2Int(numDendrites, numDendrites), new Vector2Int(0, 0), new Vector2Int(0, 0), Dynamics);
+    }
+
     [UnityTest]
     public IEnumerator BuildSingleFlatDendrite()
     {
         Brain Brain = new DummyBrain();
-        DendriteGene Gene = new DendriteGene(0, DendriteGene.SpreadType.Flat, new Vector2Int(1,1));
+        DendriteGene Gene = MakeGene(1);
         var Dendrites = DendriteBuilder.BuildFromGene(Gene, 25, 3);
         Assert.AreEqual(1, Dendrites.Count);
         Assert.AreEqual(3, Dendrites[0].SourceNeuronIndex);
@@ -27,7 +34,7 @@ public class DendriteBuilderTest
     public IEnumerator BuildMultipleFlatDendrites()
     {
         Brain Brain = new DummyBrain();
-        DendriteGene Gene = new DendriteGene(0, DendriteGene.SpreadType.Flat, new Vector2Int(2,2));
+        DendriteGene Gene = MakeGene(2);
         var Dendrites = DendriteBuilder.BuildFromGene(Gene, 25, 3);
         Assert.AreEqual(2, Dendrites.Count);
         Assert.AreEqual(3, Dendrites[0].SourceNeuronIndex);
