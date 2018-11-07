@@ -17,8 +17,11 @@ public class DendriteInterpreter {
             Vector2Int LTWRange = new Vector2Int(gene[Offset + 5], gene[Offset + 6]);
             Vector2Int StrengthRange = new Vector2Int(gene[Offset + 7], gene[Offset + 8]);
             int LTWGainRate = gene[Offset + 12];
+            int SusceptibilityRelaxRate = gene[Offset + 10];
+            RawGene SusceptRule = new RawGene(gene.GetRange(Offset + 39, 12).ToArray());
+            var SusceptibilitySVRule = SVRuleBuilder.Build(SVRuleInterpreter.Interpret(SusceptRule));
 
-            var DendriteDynamics = new DendriteDynamicsGene(LTWGainRate);
+            var DendriteDynamics = new DendriteDynamicsGene(LTWGainRate, SusceptibilityRelaxRate, SusceptibilitySVRule);
 
             Genes.Add(new DendriteGene(SourceLobeIndex, Spread, DendriteRange, LTWRange, StrengthRange, DendriteDynamics));
         }

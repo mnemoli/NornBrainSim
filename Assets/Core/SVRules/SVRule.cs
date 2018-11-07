@@ -16,39 +16,51 @@ public class SVRule {
         Stack<OpCode> operatorStack = new Stack<OpCode>();
         Stack<OpCode> operandStack = new Stack<OpCode>();
 
-        foreach(var Op in OpCodes)
+        try
         {
-            if(Op.IsOperator())
+            foreach (var Op in OpCodes)
             {
-                operatorStack.Push(Op);
-
-                if (operatorStack.Count > 0 && operandStack.Count >= operatorStack.Peek().OperandsRequired())
+                if (Op.IsOperator())
                 {
-                    var Operands = new List<OpCode>();
-                    for (int i = 0; i < operatorStack.Peek().OperandsRequired(); i++)
+                    operatorStack.Push(Op);
+
+                    if (operatorStack.Count > 0 && operandStack.Count >= operatorStack.Peek().OperandsRequired())
                     {
-                        Operands.Add(operandStack.Pop());
+                        var Operands = new List<OpCode>();
+                        for (int i = 0; i < operatorStack.Peek().OperandsRequired(); i++)
+                        {
+                            Operands.Add(operandStack.Pop());
+                        }
+                        data.Result = operatorStack.Pop().Evaluate(data, Operands);
+                        operandStack.Push(new Result());
                     }
-                    data.Output = operatorStack.Pop().Evaluate(data, Operands);
-                    operandStack.Push(new Output());
                 }
-            }
-            else
-            {
-                operandStack.Push(Op);
-
-                if(operatorStack.Count > 0 && operatorStack.Peek().OperandsRequired() >= operandStack.Count)
+                else
                 {
-                    var Operands = new List<OpCode>();
-                    for(int i = 0; i < operatorStack.Peek().OperandsRequired(); i++)
+                    operandStack.Push(Op);
+
+                    if (operatorStack.Count > 0 && operatorStack.Peek().OperandsRequired() >= operandStack.Count)
                     {
-                        Operands.Add(operandStack.Pop());
+                        var Operands = new List<OpCode>();
+                        for (int i = 0; i < operatorStack.Peek().OperandsRequired(); i++)
+                        {
+                            Operands.Add(operandStack.Pop());
+                        }
+                        data.Result = operatorStack.Pop().Evaluate(data, Operands);
+                        operandStack.Push(new Result());
                     }
-                    data.Output = operatorStack.Pop().Evaluate(data, Operands);
-                    operandStack.Push(new Output());
                 }
             }
         }
-        return data.Output;
+        catch (EndNoValueException e)
+        {
+            data.Result = 0;
+        }
+        catch (EndException e)
+        {
+            
+        }
+        
+        return data.Result;
     }
 }

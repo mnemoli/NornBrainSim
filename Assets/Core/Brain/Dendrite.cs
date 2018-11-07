@@ -10,6 +10,7 @@ public class Dendrite  {
     public float LTW { get; protected set; }
     public float STW { get; protected set; }
     private int Strength;
+    private float Susceptibility;
 
     private static readonly float RelaxationModifier = 6f;
     private static readonly float STWModifier = 255f;
@@ -34,17 +35,30 @@ public class Dendrite  {
         return SourceLobe.GetValueOfNeuron(SourceNeuronIndex) * (STW / STWModifier);
     }
 
-    public void Process()
+    public void Process(Neuron owningNeuron = null)
     {
         RelaxLTWToSTW();
+        RelaxSusceptibility();
     }
 
     private void RelaxLTWToSTW()
     {
-        if (DendriteGene.Dynamics.LTWGainRate > 0)
-        {
-            float t = RelaxationModifier * (1f / DendriteGene.Dynamics.LTWGainRate);
-            LTW = Mathf.Lerp(LTW, STW, t);
-        } 
+        LTW = Relaxer.Relax(RelaxationModifier, DendriteGene.Dynamics.LTWGainRate, LTW, STW);
+    }
+
+    private void RelaxSusceptibility()
+    {
+        Susceptibility = Relaxer.Relax(RelaxationModifier, DendriteGene.Dynamics.SusceptibilityRelaxRate, Susceptibility, 0);
+    }
+
+    private void CalculateSusceptibility(Neuron owningNeuron = null)
+    {
+        var DataPacket = new SVDataPacket();
+        DataPacket.Susceptibility = Mathf.RoundToInt(Susceptibility);
+        DataPacket.NeuronInput = Mathf.RoundToInt(owningNeuron.Input);
+        DataPacket.NeuronOutput = Mathf.RoundToInt(owningNeuron.Value);
+        DataPacket.State = Mathf.RoundToInt(owningNeuron.RawValue);
+
+        Susceptibility = DendriteGene.Dynamics.SusceptibilitySVRule.Evaluate(DataPacket);
     }
 }

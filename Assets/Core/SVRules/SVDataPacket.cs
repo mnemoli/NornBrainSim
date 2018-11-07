@@ -5,10 +5,12 @@ using UnityEngine;
 public class SVDataPacket {
 
     public int State;
-    public int Output;
+    public int Result;
+    public int NeuronOutput;
+    public int Susceptibility;
+    public int NeuronInput;
 
-    public SVDataPacket(int state)
+    public SVDataPacket()
     {
-        State = state;
     }
 }

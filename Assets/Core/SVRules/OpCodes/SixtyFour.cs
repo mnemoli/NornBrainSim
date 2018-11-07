@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 
-public class Output : OpCode
+public class SixtyFour : OpCode
 {
+    static bool Operator = false;
 
     public int Evaluate(SVDataPacket data, List<OpCode> operands)
     {
-        return data.NeuronOutput;
+        return 64;
     }
 
     public bool IsOperator()

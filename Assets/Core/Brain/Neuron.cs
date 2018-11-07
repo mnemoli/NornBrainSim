@@ -15,6 +15,21 @@ public class Neuron {
             this.value = value;
         }
     }
+    public float RawValue
+    {
+        get
+        {
+            return value;
+        }
+    }
+    private float input = 0;
+    public float Input
+    {
+        get
+        {
+            return input;
+        }
+    }
     public int Index { get; private set; }
     public List<Dendrite> Dendrites0;
     public List<Dendrite> Dendrites1;

@@ -1,11 +1,18 @@
 ﻿using System.Collections.Generic;
 
-public class Output : OpCode
+public class True : OpCode
 {
 
     public int Evaluate(SVDataPacket data, List<OpCode> operands)
     {
-        return data.NeuronOutput;
+        if(data.Result > 0)
+        {
+            return data.Result;
+        }
+        else
+        {
+            throw new System.Exception("Result not over zero");
+        }
     }
 
     public bool IsOperator()

@@ -11,7 +11,7 @@ public class SVRuleTest
     public IEnumerator BasicTest()
     {
         var SV = new SVRule(new List<OpCode> { new ThirtyTwo(), new Plus(), new Zero() });
-        Assert.AreEqual(32, SV.Evaluate(new SVDataPacket(0)));
+        Assert.AreEqual(32, SV.Evaluate(new SVDataPacket()));
 
         yield return null;
     }
@@ -19,7 +19,7 @@ public class SVRuleTest
     public IEnumerator MixedOperandLengths()
     {
         var SV = new SVRule(new List<OpCode> { new ThirtyTwo(), new Decr(), new Plus(), new Zero() });
-        Assert.AreEqual(31, SV.Evaluate(new SVDataPacket(0)));
+        Assert.AreEqual(31, SV.Evaluate(new SVDataPacket()));
 
         yield return null;
     }
