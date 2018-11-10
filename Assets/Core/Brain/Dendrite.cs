@@ -41,7 +41,7 @@ public class Dendrite  {
         RelaxLTWToSTW();
         RelaxSusceptibility();
         CalculateSusceptibility(owningNeuron);
-        value = SourceLobe.GetValueOfNeuron(SourceNeuronIndex) * (STW / STWModifier); 
+        value = SourceLobe.GetValueOfNeuronAndFire(SourceNeuronIndex) * (STW / STWModifier); 
     }
 
     private void RelaxLTWToSTW()

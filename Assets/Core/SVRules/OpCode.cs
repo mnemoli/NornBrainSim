@@ -6,6 +6,6 @@ namespace OpCode
     {
         bool IsOperator();
         int OperandsRequired();
-        int Evaluate(SVDataPacket data, List<IOpCode> operands);
+        float Evaluate(SVDataPacket data, List<IOpCode> operands);
     }
 }

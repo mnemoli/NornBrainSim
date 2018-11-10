@@ -7,9 +7,9 @@ namespace OpCode
     public class Type1 : IOpCode
     {
 
-        public int Evaluate(SVDataPacket data, List<IOpCode> operands)
+        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
-            return Mathf.RoundToInt(data.d0.Sum(d => d.GetValue()));
+            return Mathf.RoundToInt(data.d1.Sum(d => d.GetValue()));
         }
 
         public bool IsOperator()

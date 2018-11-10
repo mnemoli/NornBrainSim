@@ -96,9 +96,9 @@ public class Lobe {
         }
     }
 
-    public float GetValueOfNeuron(int index)
+    public float GetValueOfNeuronAndFire(int index)
     {
-        return Neurons[index].Value;
+        return Neurons[index].Fire();
     }
     
     public void SetUpDendrites(Brain brain)
@@ -132,19 +132,29 @@ public class Lobe {
     {
         var Neuron = GetFiringNeuron();
         var NeuronIndex = (Neuron == null) ? -1 : Neuron.Index;
-        LobeRenderer.Render(Location, Dimension, NeuronEnumType, NeuronIndex);
+        var NeuronValue = (Neuron == null) ? 0 : Neuron.Value;
+        LobeRenderer.Render(Location, Dimension, NeuronEnumType, NeuronIndex, NeuronValue);
     }
 
     public void RenderDendrites()
     {
         foreach (var Neuron in Neurons)
         {
-            if (Neuron.Dendrites0 == null)
-                continue;
-            foreach(var Dendrite0 in Neuron.Dendrites0)
+            if (Neuron.Dendrites0 != null)
             {
-                DendriteRenderer.Render(Dendrite0.SourceLobe.Location, Dendrite0.SourceLobe.Dimension, Dendrite0.SourceNeuronIndex, Location, Dimension, Neuron.Index); 
+                foreach (var Dendrite0 in Neuron.Dendrites0)
+                {
+                    DendriteRenderer.Render(0, Dendrite0.SourceLobe.Location, Dendrite0.SourceLobe.Dimension, Dendrite0.SourceNeuronIndex, Location, Dimension, Neuron.Index);
+                }
             }
+            if(Neuron.Dendrites1 != null)
+            {
+                foreach (var Dendrite1 in Neuron.Dendrites1)
+                {
+                    DendriteRenderer.Render(1, Dendrite1.SourceLobe.Location, Dendrite1.SourceLobe.Dimension, Dendrite1.SourceNeuronIndex, Location, Dimension, Neuron.Index);
+                }
+            }
+            
         }
     }
 }

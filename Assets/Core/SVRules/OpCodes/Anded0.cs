@@ -7,7 +7,7 @@ namespace OpCode
     public class Anded0 : IOpCode
     {
 
-        public int Evaluate(SVDataPacket data, List<IOpCode> operands)
+        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
             if (data.d0.Any(d => d.GetValue() == 0))
             {

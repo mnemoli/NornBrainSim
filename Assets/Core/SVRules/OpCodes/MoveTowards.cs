@@ -5,7 +5,7 @@ namespace OpCode
     public class MoveTowards : IOpCode
     {
 
-        public int Evaluate(SVDataPacket data, List<IOpCode> operands)
+        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
             var Op0 = operands[0].Evaluate(data, null);
             var Op1 = operands[1].Evaluate(data, null);

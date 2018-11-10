@@ -6,7 +6,7 @@ namespace OpCode
     public class Input : IOpCode
     {
 
-        public int Evaluate(SVDataPacket data, List<IOpCode> operands)
+        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
             return data.d0.Any(d => d.GetValue() > 0) || data.d1.Any(d => d.GetValue() > 0) ? 1 : 0;
         }

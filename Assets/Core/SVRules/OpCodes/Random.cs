@@ -5,7 +5,7 @@ namespace OpCode
     public class Random : IOpCode
     {
 
-        public int Evaluate(SVDataPacket data, List<IOpCode> operands)
+        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
             return UnityEngine.Random.Range(operands[0].Evaluate(data, null), operands[1].Evaluate(data, null));
         }

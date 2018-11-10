@@ -5,7 +5,7 @@ namespace OpCode
     public class Decr : IOpCode
     {
 
-        public int Evaluate(SVDataPacket data, List<IOpCode> operands)
+        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
             return operands[0].Evaluate(data, null) - 1;
         }

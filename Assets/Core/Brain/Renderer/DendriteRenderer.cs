@@ -24,13 +24,13 @@ public class DendriteRenderer
         }
     }
 
-    public static void Render(Vector2Int sourceLocation, Vector2Int sourceDimension, int sourceNeuron, Vector2Int destLocation, Vector2Int destDimension, int destNeuron)
+    public static void Render(int type, Vector2Int sourceLocation, Vector2Int sourceDimension, int sourceNeuron, Vector2Int destLocation, Vector2Int destDimension, int destNeuron)
     {
         GL.PushMatrix();
         LineMaterial.SetPass(0);
         GL.LoadPixelMatrix();
         GL.Begin(GL.LINES);
-        GL.Color(Color.black);
+        GL.Color(type == 0 ? Color.black : Color.red);
         var Start = GetNeuronPosition(sourceLocation, sourceDimension, sourceNeuron);
         var End = GetNeuronPosition(destLocation, destDimension, destNeuron);
         GL.Vertex3(Start.x, Start.y, 0);

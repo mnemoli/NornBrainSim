@@ -6,7 +6,7 @@ namespace OpCode
     {
         static bool Operator = false;
 
-        public int Evaluate(SVDataPacket data, List<IOpCode> operands)
+        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
             return 64;
         }

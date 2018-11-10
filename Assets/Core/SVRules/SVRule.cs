@@ -12,7 +12,7 @@ public class SVRule {
         OpCodes = opCodes;
     }
 
-    public int Evaluate(SVDataPacket data)
+    public float Evaluate(SVDataPacket data)
     {
         Stack<IOpCode> operatorStack = new Stack<IOpCode>();
         Stack<IOpCode> operandStack = new Stack<IOpCode>();

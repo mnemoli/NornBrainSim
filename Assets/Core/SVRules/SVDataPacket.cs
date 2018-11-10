@@ -2,8 +2,8 @@
 
 public class SVDataPacket {
 
-    public int State;
-    public int Result;
+    public float State;
+    public float Result;
     public int NeuronOutput;
     public int Susceptibility;
     public List<Dendrite> d0;

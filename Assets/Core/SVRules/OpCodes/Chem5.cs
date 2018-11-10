@@ -5,7 +5,7 @@ namespace OpCode
     public class Chem5 : IOpCode
     {
 
-        public int Evaluate(SVDataPacket data, List<IOpCode> operands)
+        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
             //TODO
             return 0;

@@ -27,6 +27,9 @@ public class LobeBuilder {
             case BrainLobeID.Decision:
                 NeuronEnumType = typeof(VerbGenus);
                 break;
+            case BrainLobeID.Attention:
+                NeuronEnumType = typeof(StimulusGenus);
+                break;
         }
         return new Lobe(gene.LobeID, NeuronEnumType, gene.Location, gene.Dimension, Neurons, gene.CopyToPerceptionLobe, gene.WinnerTakesAll);
     }

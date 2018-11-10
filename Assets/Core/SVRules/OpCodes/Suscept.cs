@@ -5,7 +5,7 @@ namespace OpCode
     public class Suscept : IOpCode
     {
 
-        public int Evaluate(SVDataPacket data, List<IOpCode> operands)
+        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
             return data.Susceptibility;
         }

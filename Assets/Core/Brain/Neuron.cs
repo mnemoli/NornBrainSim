@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -41,6 +42,7 @@ public class Neuron {
             }
         }
         State = ProcessStateRule();
+        State = Mathf.Clamp(State, 0, 255);
         State = ProcessLeakage();
     }
 
@@ -48,9 +50,10 @@ public class Neuron {
     {
         SVDataPacket Data = new SVDataPacket
         {
-            State = Mathf.RoundToInt(State),
+            State = State,
             d0 = Dendrites0,
-            d1 = Dendrites1
+            d1 = Dendrites1,
+            NeuronOutput = Value
         };
         return Gene.SVRule.Evaluate(Data);
     }
@@ -63,7 +66,7 @@ public class Neuron {
         }
         else
         {
-            return Relaxer.Relax(1, Gene.Leakage, State, Gene.RestState);
+            return Relaxer.Relax(6, Gene.Leakage, State, Gene.RestState);
         }
     }
 
@@ -80,5 +83,12 @@ public class Neuron {
     public void SetState(int strength)
     {
         State = strength;
+    }
+
+    public float Fire()
+    {
+        var ReturnVal = Value;
+        State -= Gene.Threshold;
+        return ReturnVal;
     }
 }

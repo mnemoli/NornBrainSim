@@ -5,7 +5,7 @@ namespace OpCode
     public class Output : IOpCode
     {
 
-        public int Evaluate(SVDataPacket data, List<IOpCode> operands)
+        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
             return data.NeuronOutput;
         }
