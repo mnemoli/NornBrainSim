@@ -28,7 +28,7 @@ public class LobeBuilder {
                 NeuronEnumType = typeof(VerbGenus);
                 break;
         }
-        return new Lobe(gene.LobeID, NeuronEnumType, gene.Location, gene.Dimension, Neurons);
+        return new Lobe(gene.LobeID, NeuronEnumType, gene.Location, gene.Dimension, Neurons, gene.CopyToPerceptionLobe, gene.WinnerTakesAll);
     }
 
     public static List<Neuron> SetUpDendrites(List<Neuron> neurons, DendriteGene d0, DendriteGene d1, int numSourceNeurons0, int numSourceNeurons1)

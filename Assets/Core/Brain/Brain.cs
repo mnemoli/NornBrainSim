@@ -16,7 +16,11 @@ public class Brain : MonoBehaviour {
 
     public void FixedUpdate()
     {
-        Lobes.ForEach(l => l.Process());
+        foreach(var Lobe in Lobes)
+        {
+            Lobe.Process();
+        }
+        //Lobes.ForEach(l => l.Process());
     }
 
     public virtual Lobe LobeFromIndex(BrainLobeType index)
@@ -26,8 +30,16 @@ public class Brain : MonoBehaviour {
 
     public void SetUpLobes()
     {
+        var PerceptionLobe = Lobes[0];
+        int OffsetIntoPerceptionLobe = 0;
+
         foreach (var Lobe in Lobes)
         {
+            if(Lobe.CopyToPerceptionLobe)
+            {
+                Lobe.SetUpPerceptionLobeLink(OffsetIntoPerceptionLobe, PerceptionLobe);
+                OffsetIntoPerceptionLobe += Lobe.NumNeurons;
+            }
             Lobe.SetUpDendrites(this);
         }
     }
@@ -39,7 +51,7 @@ public class Brain : MonoBehaviour {
 
     public void AddStimulus(StimulusGenus stimulus)
     {
-        Lobes[(int)BrainLobeType.StimulusSource].FireNeuron((int)stimulus);
+        Lobes[(int)BrainLobeType.StimulusSource].CopyToNeuron((int)stimulus);
     }
 
     public void AddNoun(StimulusGenus noun)

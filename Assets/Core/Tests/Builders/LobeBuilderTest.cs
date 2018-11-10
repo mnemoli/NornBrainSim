@@ -9,7 +9,7 @@ public class LobeBuilderTest
     {
         public override Lobe LobeFromIndex(BrainLobeType index)
         {
-            return new Lobe(BrainLobeID.Attention, null, new Vector2Int(0, 0), new Vector2Int(0, 0), null);
+            return new Lobe(BrainLobeID.Attention, null, new Vector2Int(0, 0), new Vector2Int(0, 0), null, false, false);
         }
     }
     [UnityTest]
@@ -18,7 +18,7 @@ public class LobeBuilderTest
         DummyBrain Brain = new DummyBrain();
         var Location = new Vector2Int(1, 2);
         var Dimension = new Vector2Int(3, 4);
-        LobeGene Gene = new LobeGene(BrainLobeID.Concept, Location, Dimension, null, null, null);
+        LobeGene Gene = new LobeGene(BrainLobeID.Concept, Location, Dimension, null, null, null, 0, 0);
         var Lobe = LobeBuilder.BuildFromGene(Gene, 25, 25);
         Assert.AreEqual(BrainLobeID.Concept, Lobe.LobeID);
         Assert.AreEqual(Location, Lobe.Location);

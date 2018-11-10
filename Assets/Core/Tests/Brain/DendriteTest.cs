@@ -67,7 +67,7 @@ public class DendriteTest
         DendriteGene DendriteGene = new DendriteGene(0, DendriteGene.SpreadType.Flat, 0, new Vector2Int(0, 0), new Vector2Int(5, 5), new Vector2Int(1, 1), DynamicsGene);
         TestDendrite Dendrite = new TestDendrite(0, 0, DendriteGene);
         NeuronGene NeuronGene = new NeuronGene(0, 0, 0, null);
-        Lobe lobe = new Lobe(0, null, new Vector2Int(0, 0), new Vector2Int(5, 5), Enumerable.Range(0, 25).Select(n => new Neuron(n, NeuronGene)).ToList());
+        Lobe lobe = new Lobe(0, null, new Vector2Int(0, 0), new Vector2Int(5, 5), Enumerable.Range(0, 25).Select(n => new Neuron(n, NeuronGene)).ToList(), false, false);
         lobe.FireNeuron(0);
         Dendrite.SetSourceLobe(lobe);
         Dendrite.MockSTW(1);

@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class Neuron {
     private float value;
-    public float Value
+    public int Value
     {
         get
         {
-            return value > Gene.Threshold ? value : Gene.RestState;
+            return Mathf.RoundToInt(value > Gene.Threshold ? value : Gene.RestState);
         }
     }
     public float State { get; private set; }
@@ -28,9 +28,7 @@ public class Neuron {
 
     public void Process()
     {
-        State = value;
-        value = ProcessStateRule();
-
+        value = State;
         if (Dendrites0 != null && Dendrites1 != null)
         {
             foreach (var Dendrite in Dendrites0)
@@ -42,6 +40,8 @@ public class Neuron {
                 Dendrite.Process(this);
             }
         }
+        State = ProcessStateRule();
+        State = ProcessLeakage();
     }
 
     private float ProcessStateRule()
@@ -63,7 +63,7 @@ public class Neuron {
         }
         else
         {
-            return Relaxer.Relax(6, Gene.Leakage, State, Gene.RestState);
+            return Relaxer.Relax(1, Gene.Leakage, State, Gene.RestState);
         }
     }
 
@@ -77,8 +77,8 @@ public class Neuron {
         return Dendrites0.Aggregate(0f, (agg, n) => agg + n.GetValue());
     }
 
-    public void SetStrength(int strength)
+    public void SetState(int strength)
     {
-        value = strength;
+        State = strength;
     }
 }

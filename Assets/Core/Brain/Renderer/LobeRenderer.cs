@@ -15,6 +15,11 @@ public class LobeRenderer {
             var LabelRect = new Rect(GUIRect.position + new Vector2(50, 0), new Vector2(200, 50));
             GUI.Label(LabelRect, new GUIContent(Enum.GetName(enumType, enumValue)));
         }
+        else
+        {
+            var LabelRect = new Rect(GUIRect.position + new Vector2(50, 0), new Vector2(200, 50));
+            GUI.Label(LabelRect, new GUIContent(enumValue.ToString()));
+        }
         GUI.Box(GUIRect, "");
         
     }

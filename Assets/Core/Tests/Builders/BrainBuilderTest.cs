@@ -9,7 +9,7 @@ public class BrainBuilderTest
     [UnityTest]
     public IEnumerator BuildBrain()
     {
-        LobeGene Gene = new LobeGene(0, new Vector2Int(0, 0), new Vector2Int(1, 2), null, null, null);
+        LobeGene Gene = new LobeGene(0, new Vector2Int(0, 0), new Vector2Int(1, 2), null, null, null, 0, 0);
         List<LobeGene> Genes = new List<LobeGene> { Gene };
 
         GameObject go = new GameObject("Dummy game object");

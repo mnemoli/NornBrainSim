@@ -19,7 +19,7 @@ public class LobeInterpTest
         LobeGene[2] = 7;
 
         var InterpretedGene = LobeInterpreter.Interpret(LobeGene);
-        Assert.AreEqual((BrainLobeType)7, InterpretedGene.LobeID);
+        Assert.AreEqual((BrainLobeID)7, InterpretedGene.LobeID);
 
         yield return null;
     }

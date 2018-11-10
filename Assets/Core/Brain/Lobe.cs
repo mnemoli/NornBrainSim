@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Lobe {
 
@@ -15,15 +14,29 @@ public class Lobe {
     {
         get { return Neurons.Count; }
     }
+
+    public readonly bool CopyToPerceptionLobe;
+    private Lobe PerceptionLobe;
+    private int OffsetIntoPerceptionLobe;
+    private readonly bool WinnerTakesAll;
+
     private List<Neuron> Neurons;
 
-    public Lobe(BrainLobeID lobeID, Type neuronEnumType, Vector2Int location, Vector2Int dimension, List<Neuron> neurons)
+    public Lobe(BrainLobeID lobeID, Type neuronEnumType, Vector2Int location, Vector2Int dimension, List<Neuron> neurons, bool copyToPerceptionLobe, bool winnerTakesAll)
     {
         LobeID = lobeID;
         NeuronEnumType = neuronEnumType;
         Location = location;
         Dimension = dimension;
         Neurons = neurons;
+        CopyToPerceptionLobe = copyToPerceptionLobe;
+        WinnerTakesAll = winnerTakesAll;
+    }
+
+    public void SetUpPerceptionLobeLink(int offsetIntoPerceptionLobe, Lobe perceptionLobe)
+    {
+        OffsetIntoPerceptionLobe = offsetIntoPerceptionLobe;
+        PerceptionLobe = perceptionLobe;
     }
 
     public void Process()
@@ -32,11 +45,24 @@ public class Lobe {
         {
             Neuron.Process();
         }
+        if(CopyToPerceptionLobe)
+        {
+            foreach(var Neuron in GetFiringNeurons())
+            {
+                PerceptionLobe.CopyToNeuron(OffsetIntoPerceptionLobe + Neuron.Index, Neuron.Value);
+            }
+        }
+
+    }
+
+    public void CopyToNeuron(int neuronIndex, int amount = 255)
+    {
+        Neurons[neuronIndex].SetState(amount);
     }
 
     public void FireNeuron(int neuronIndex, int amount = 255)
     {
-        Neurons[neuronIndex].SetStrength(amount);
+        Neurons[neuronIndex].SetState(amount);
     }
 
     public Neuron GetFiringNeuron()
@@ -49,6 +75,24 @@ public class Lobe {
         else
         {
             return null;
+        }
+    }
+
+    public List<Neuron> GetFiringNeurons()
+    {
+        if(WinnerTakesAll)
+        {
+            var Neuron = new List<Neuron>();
+            var FiringNeuron = GetFiringNeuron();
+            if(FiringNeuron != null)
+            {
+                Neuron.Add(GetFiringNeuron());
+            }
+            return Neuron;
+        }
+        else
+        {
+            return Neurons.FindAll(n => n.Value > n.Gene.RestState);
         }
     }
 

@@ -15,8 +15,19 @@ public class LobeGene : Gene
             return Dimension.x * Dimension.y;
         }
     }
+    public readonly bool CopyToPerceptionLobe;
+    public readonly bool WinnerTakesAll;
 
-    public LobeGene(BrainLobeID lobeID, Vector2Int location, Vector2Int dimension, DendriteGene dendrite0, DendriteGene dendrite1, NeuronGene neuronGene)
+    public LobeGene(
+        BrainLobeID lobeID,
+        Vector2Int location,
+        Vector2Int dimension,
+        DendriteGene dendrite0,
+        DendriteGene dendrite1,
+        NeuronGene neuronGene,
+        int copyToPerceptionLobe,
+        int winnerTakesAll
+        )
     {
         LobeID = lobeID;
         Location = location;
@@ -24,5 +35,7 @@ public class LobeGene : Gene
         Dendrite0 = dendrite0;
         Dendrite1 = dendrite1;
         NeuronGene = neuronGene;
+        CopyToPerceptionLobe = copyToPerceptionLobe == 1 ? true : false;
+        WinnerTakesAll = winnerTakesAll == 1 ? true : false;
     }
 }

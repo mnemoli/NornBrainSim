@@ -61,6 +61,24 @@ public class SVRule {
         {
             return data.Result;
         }
+
+        if(operandStack.Count > 0)
+        {
+            // Get the first result off the stack and use it as the result
+            // This will normally be an end operand or a Result
+            try
+            {
+                return operandStack.Pop().Evaluate(data, null);
+            }
+            catch (EndNoValueException e)
+            {
+                return 0;
+            }
+            catch (EndException e)
+            {
+                return data.Result;
+            }
+        }
         
         return data.Result;
     }
