@@ -25,7 +25,7 @@ public class DendriteTest
     {
         var LTWGainRate = 16;
         var DynamicsGene = new DendriteDynamicsGene(LTWGainRate, 0, null);
-        DendriteGene DendriteGene = new DendriteGene(0, DendriteGene.SpreadType.Flat, new Vector2Int(0,0), new Vector2Int(0, 0), new Vector2Int(1, 1), DynamicsGene);
+        DendriteGene DendriteGene = new DendriteGene(0, DendriteGene.SpreadType.Flat, 0, new Vector2Int(0,0), new Vector2Int(0, 0), new Vector2Int(1, 1), DynamicsGene);
         TestDendrite Dendrite = new TestDendrite(0, 0, DendriteGene);
         Dendrite.MockSTW(1);
         // Process assumes it is being called in FixedUpdate
@@ -46,7 +46,7 @@ public class DendriteTest
         var Start = 255;
         var End = 3;
         var DynamicsGene = new DendriteDynamicsGene(LTWGainRate, 0, null);
-        DendriteGene DendriteGene = new DendriteGene(0, DendriteGene.SpreadType.Flat, new Vector2Int(0, 0), new Vector2Int(Start, Start), new Vector2Int(1, 1), DynamicsGene);
+        DendriteGene DendriteGene = new DendriteGene(0, DendriteGene.SpreadType.Flat, 0, new Vector2Int(0, 0), new Vector2Int(Start, Start), new Vector2Int(1, 1), DynamicsGene);
         TestDendrite Dendrite = new TestDendrite(0, 0, DendriteGene);
         Dendrite.MockSTW(1);
         // Process assumes it is being called in FixedUpdate
@@ -64,7 +64,7 @@ public class DendriteTest
     public IEnumerator GetValue()
     {
         var DynamicsGene = new DendriteDynamicsGene(1, 0, null);
-        DendriteGene DendriteGene = new DendriteGene(0, DendriteGene.SpreadType.Flat, new Vector2Int(0, 0), new Vector2Int(5, 5), new Vector2Int(1, 1), DynamicsGene);
+        DendriteGene DendriteGene = new DendriteGene(0, DendriteGene.SpreadType.Flat, 0, new Vector2Int(0, 0), new Vector2Int(5, 5), new Vector2Int(1, 1), DynamicsGene);
         TestDendrite Dendrite = new TestDendrite(0, 0, DendriteGene);
         NeuronGene NeuronGene = new NeuronGene(0, 0, 0);
         Lobe lobe = new Lobe(0, null, new Vector2Int(0, 0), new Vector2Int(5, 5), Enumerable.Range(0, 25).Select(n => new Neuron(n, NeuronGene)).ToList());

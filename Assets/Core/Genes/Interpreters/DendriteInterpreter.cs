@@ -14,6 +14,7 @@ public class DendriteInterpreter {
             BrainLobeType SourceLobeIndex = (BrainLobeType)gene[Offset];
             Vector2Int DendriteRange = new Vector2Int(gene[Offset+1], gene[Offset+2]);
             DendriteGene.SpreadType Spread = (DendriteGene.SpreadType)gene[Offset+3];
+            int Fanout = gene[Offset + 4];
             Vector2Int LTWRange = new Vector2Int(gene[Offset + 5], gene[Offset + 6]);
             Vector2Int StrengthRange = new Vector2Int(gene[Offset + 7], gene[Offset + 8]);
             int LTWGainRate = gene[Offset + 12];
@@ -23,7 +24,7 @@ public class DendriteInterpreter {
 
             var DendriteDynamics = new DendriteDynamicsGene(LTWGainRate, SusceptibilityRelaxRate, SusceptibilitySVRule);
 
-            Genes.Add(new DendriteGene(SourceLobeIndex, Spread, DendriteRange, LTWRange, StrengthRange, DendriteDynamics));
+            Genes.Add(new DendriteGene(SourceLobeIndex, Spread, Fanout, DendriteRange, LTWRange, StrengthRange, DendriteDynamics));
         }
 
         return Genes;

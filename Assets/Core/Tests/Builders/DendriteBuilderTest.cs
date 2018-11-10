@@ -17,7 +17,7 @@ public class DendriteBuilderTest
     private DendriteGene MakeGene(int numDendrites)
     {
         var Dynamics = new DendriteDynamicsGene(1, 0, null);
-        return new DendriteGene(0, DendriteGene.SpreadType.Flat, new Vector2Int(numDendrites, numDendrites), new Vector2Int(0, 0), new Vector2Int(0, 0), Dynamics);
+        return new DendriteGene(0, DendriteGene.SpreadType.Flat, 0, new Vector2Int(numDendrites, numDendrites), new Vector2Int(0, 0), new Vector2Int(0, 0), Dynamics);
     }
 
     [UnityTest]

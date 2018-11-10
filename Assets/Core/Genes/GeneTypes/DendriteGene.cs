@@ -8,6 +8,7 @@ public class DendriteGene : Gene {
 
     public readonly BrainLobeType SourceLobeIndex;
     public readonly SpreadType Spread;
+    public readonly int Fanout;
     public readonly Vector2Int DendriteNumber;
     public int NumDendrites
     {
@@ -34,10 +35,11 @@ public class DendriteGene : Gene {
     }
     public readonly DendriteDynamicsGene Dynamics;
 
-    public DendriteGene(BrainLobeType sourceLobeIndex, SpreadType spread, Vector2Int dendriteNumber, Vector2Int ltwRange, Vector2Int strengthRange, DendriteDynamicsGene dynamicsGene)
+    public DendriteGene(BrainLobeType sourceLobeIndex, SpreadType spread, int fanout, Vector2Int dendriteNumber, Vector2Int ltwRange, Vector2Int strengthRange, DendriteDynamicsGene dynamicsGene)
     {
         SourceLobeIndex = sourceLobeIndex;
         Spread = spread;
+        Fanout = fanout;
         DendriteNumber = dendriteNumber;
         LTWRange = ltwRange;
         StrengthRange = strengthRange;
