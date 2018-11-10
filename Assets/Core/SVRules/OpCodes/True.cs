@@ -1,19 +1,25 @@
 ﻿using System.Collections.Generic;
+using UnityEngine.Profiling;
 
 namespace OpCode
 {
     public class True : IOpCode
     {
 
+        private readonly static EndNoValueException Excpt = new EndNoValueException();
+
         public float Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
-            if (data.Result > 0)
+            Profiler.BeginSample("True");
+            if(operands[0].Evaluate(data, null) > 0)
             {
-                return operands[0].Evaluate(data, null);
+                Profiler.EndSample();
+                return operands[1].Evaluate(data, null);
             }
             else
             {
-                throw new EndNoValueException();
+                Profiler.EndSample();
+                throw Excpt;
             }
         }
 
@@ -24,7 +30,7 @@ namespace OpCode
 
         public int OperandsRequired()
         {
-            return 1;
+            return 2;
         }
     }
 }

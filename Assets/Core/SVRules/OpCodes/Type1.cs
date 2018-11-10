@@ -9,7 +9,7 @@ namespace OpCode
 
         public float Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
-            return Mathf.RoundToInt(data.d1.Sum(d => d.GetValue()));
+            return data.d1.Sum(d => d.GetValue());
         }
 
         public bool IsOperator()

@@ -16,11 +16,7 @@ public class Brain : MonoBehaviour {
 
     public void FixedUpdate()
     {
-        foreach(var Lobe in Lobes)
-        {
-            Lobe.Process();
-        }
-        //Lobes.ForEach(l => l.Process());
+        Lobes.ForEach(l => l.Process());
     }
 
     public virtual Lobe LobeFromIndex(BrainLobeType index)

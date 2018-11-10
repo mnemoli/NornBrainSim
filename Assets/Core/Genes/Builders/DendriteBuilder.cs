@@ -24,18 +24,12 @@ public class DendriteBuilder {
             {
                 if (SourceNeuronIndex >= 0 && SourceNeuronIndex <= 15)
                 {
-                    if(!Drive)
-                    {
-                        Dendrites.Add(new Dendrite(gene.SourceLobeIndex, SourceNeuronIndex, gene));
-                    }
+                    Dendrites.Add(new Dendrite(gene.SourceLobeIndex, SourceNeuronIndex, gene, !Drive));
                     Drive = true;
                 }
                 else if (SourceNeuronIndex >= 16 && SourceNeuronIndex <= 31)
                 {
-                    if(!Verb)
-                    {
-                        Dendrites.Add(new Dendrite(gene.SourceLobeIndex, SourceNeuronIndex, gene));
-                    }
+                    Dendrites.Add(new Dendrite(gene.SourceLobeIndex, SourceNeuronIndex, gene, !Verb));
                     Verb = true;
                 }
             }

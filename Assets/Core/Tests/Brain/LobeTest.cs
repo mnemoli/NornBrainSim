@@ -40,9 +40,9 @@ public class LobeTest
         });
         var Type0NeuronGene = new NeuronGene(0, 0, 255, Type0SVRule);
         var StateNeuronGene = new NeuronGene(0, 0, 255, StateSVRule);
-        var DendriteDynamics = new DendriteDynamicsGene(0, 0, StateSVRule);
-        DendriteGene DendriteGene = new DendriteGene(BrainLobeType.Drive, DendriteGene.SpreadType.Flat, 0, new Vector2Int(1, 1), new Vector2Int(255, 255), new Vector2Int(255, 255), DendriteDynamics);
-        DendriteGene DendriteGeneNoDendrites = new DendriteGene(BrainLobeType.Perception, DendriteGene.SpreadType.Flat, 0, new Vector2Int(0, 0), new Vector2Int(1, 1), new Vector2Int(1, 1), DendriteDynamics);
+        var DendriteDynamics = new DendriteDynamicsGene(0, 0, StateSVRule, 0, null, 0, null, 0);
+        DendriteGene DendriteGene = new DendriteGene(0, BrainLobeType.Drive, DendriteGene.SpreadType.Flat, 0, new Vector2Int(1, 1), new Vector2Int(255, 255), new Vector2Int(255, 255), DendriteDynamics);
+        DendriteGene DendriteGeneNoDendrites = new DendriteGene(0, BrainLobeType.Perception, DendriteGene.SpreadType.Flat, 0, new Vector2Int(0, 0), new Vector2Int(1, 1), new Vector2Int(1, 1), DendriteDynamics);
         // Destination lobe
         var LobeGene1 = new LobeGene(BrainLobeID.Perception, new Vector2Int(1, 1), new Vector2Int(1, 1), DendriteGene, DendriteGene, Type0NeuronGene, 0, 0);
         // Source lobe

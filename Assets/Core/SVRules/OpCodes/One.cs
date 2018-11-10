@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
 namespace OpCode
 {
-    public class Type0 : IOpCode
+    public class One : IOpCode
     {
 
         public float Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
-            return data.d0.Sum(d => d.GetValue());
+            return 1;
         }
 
         public bool IsOperator()

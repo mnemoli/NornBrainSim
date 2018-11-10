@@ -5,7 +5,7 @@ using UnityEngine;
 public class DendriteGene : Gene {
 
     public enum SpreadType { Flat, Normal, Saw, Was }
-
+    public readonly int Type;
     public readonly BrainLobeType SourceLobeIndex;
     public readonly SpreadType Spread;
     public readonly int Fanout;
@@ -35,8 +35,9 @@ public class DendriteGene : Gene {
     }
     public readonly DendriteDynamicsGene Dynamics;
 
-    public DendriteGene(BrainLobeType sourceLobeIndex, SpreadType spread, int fanout, Vector2Int dendriteNumber, Vector2Int ltwRange, Vector2Int strengthRange, DendriteDynamicsGene dynamicsGene)
+    public DendriteGene(int type, BrainLobeType sourceLobeIndex, SpreadType spread, int fanout, Vector2Int dendriteNumber, Vector2Int ltwRange, Vector2Int strengthRange, DendriteDynamicsGene dynamicsGene)
     {
+        Type = type;
         SourceLobeIndex = sourceLobeIndex;
         Spread = spread;
         Fanout = fanout;

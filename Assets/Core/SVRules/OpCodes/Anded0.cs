@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 namespace OpCode
 {
@@ -15,7 +16,8 @@ namespace OpCode
             }
             else
             {
-                return Mathf.RoundToInt(data.d0.Sum(d => d.GetValue()));
+                var x = data.d0.Sum(d => d.GetValue());
+                return x;
             }
         }
 

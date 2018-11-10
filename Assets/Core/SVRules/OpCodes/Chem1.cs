@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
 namespace OpCode
 {
-    public class Type0 : IOpCode
+    public class Chem1 : IOpCode
     {
 
         public float Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
-            return data.d0.Sum(d => d.GetValue());
+            //TODO
+            return 0;
         }
 
         public bool IsOperator()

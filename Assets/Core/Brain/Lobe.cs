@@ -41,16 +41,10 @@ public class Lobe {
 
     public void Process()
     {
-        foreach(var Neuron in Neurons)
-        {
-            Neuron.Process();
-        }
+        Neurons.ForEach(n => n.Process());
         if(CopyToPerceptionLobe)
         {
-            foreach(var Neuron in GetFiringNeurons())
-            {
-                PerceptionLobe.CopyToNeuron(OffsetIntoPerceptionLobe + Neuron.Index, Neuron.Value);
-            }
+            GetFiringNeurons().ForEach(n => PerceptionLobe.CopyToNeuron(OffsetIntoPerceptionLobe + n.Index, n.Value));
         }
 
     }

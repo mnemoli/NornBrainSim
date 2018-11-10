@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 public class Neuron {
     private float value;
@@ -18,6 +19,7 @@ public class Neuron {
     public List<Dendrite> Dendrites0;
     public List<Dendrite> Dendrites1;
     public NeuronGene Gene;
+    private SVDataPacket SVDataPacket = new SVDataPacket();
 
     public Neuron(int index, NeuronGene neuronGene)
     {
@@ -30,6 +32,7 @@ public class Neuron {
     public void Process()
     {
         value = State;
+        Profiler.BeginSample("Dendrites");
         if (Dendrites0 != null && Dendrites1 != null)
         {
             foreach (var Dendrite in Dendrites0)
@@ -41,21 +44,23 @@ public class Neuron {
                 Dendrite.Process(this);
             }
         }
+        Profiler.EndSample();
+        Profiler.BeginSample("State rule");
         State = ProcessStateRule();
+        Profiler.EndSample();
         State = Mathf.Clamp(State, 0, 255);
+        Profiler.BeginSample("Leakage");
         State = ProcessLeakage();
+        Profiler.EndSample();
     }
 
     private float ProcessStateRule()
     {
-        SVDataPacket Data = new SVDataPacket
-        {
-            State = State,
-            d0 = Dendrites0,
-            d1 = Dendrites1,
-            NeuronOutput = Value
-        };
-        return Gene.SVRule.Evaluate(Data);
+        SVDataPacket.State = State;
+        SVDataPacket.d0 = Dendrites0;
+        SVDataPacket.d1 = Dendrites1;
+        SVDataPacket.NeuronOutput = Value;
+        return Gene.SVRule.Evaluate(SVDataPacket);
     }
 
     private float ProcessLeakage()
@@ -90,5 +95,27 @@ public class Neuron {
         var ReturnVal = Value;
         State -= Gene.Threshold;
         return ReturnVal;
+    }
+
+    public bool AnyDendriteLoose(int type)
+    {
+        var DendriteType = type == 0 ? Dendrites0 : Dendrites1;
+        return DendriteType.Any(n => n.Strength == 0);
+    }
+
+    public bool AllDendritesLoose(int type)
+    {
+        var DendriteType = type == 0 ? Dendrites0 : Dendrites1;
+        return DendriteType.All(n => n.Strength == 0);
+    }
+
+    public bool CheckForExistingDriveDendrite()
+    {
+        return Dendrites0.Concat(Dendrites1).Any(n => n.SourceNeuronIndex < 15);
+    }
+
+    public bool CheckForExistingVerbDendrite()
+    {
+        return Dendrites0.Concat(Dendrites1).Any(n => n.SourceNeuronIndex > 16 && n.SourceNeuronIndex < 31);
     }
 }

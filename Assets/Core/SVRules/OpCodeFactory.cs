@@ -45,6 +45,18 @@ public class OpCodeFactory  {
                 return new Type0();
             case OpCodeType.type1:
                 return new Type1();
+            case OpCodeType.chem0:
+                return new Chem0();
+            case OpCodeType.STW:
+                return new STW();
+            case OpCodeType.chem2:
+                return new Chem2();
+            case OpCodeType._1:
+                return new One();
+            case OpCodeType.chem1:
+                return new Chem1();
+            case OpCodeType.chem3:
+                return new Chem3();
             default:
                 throw new NotImplementedException();
         }
