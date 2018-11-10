@@ -25,7 +25,7 @@ public class DendriteBuilderTest
     {
         Brain Brain = new DummyBrain();
         DendriteGene Gene = MakeGene(1);
-        var Dendrites = DendriteBuilder.BuildFromGene(Gene, 25, 3);
+        var Dendrites = DendriteBuilder.BuildFromGene(Gene, 25, 3, false);
         Assert.AreEqual(1, Dendrites.Count);
         Assert.AreEqual(3, Dendrites[0].SourceNeuronIndex);
         yield return null;
@@ -35,7 +35,7 @@ public class DendriteBuilderTest
     {
         Brain Brain = new DummyBrain();
         DendriteGene Gene = MakeGene(2);
-        var Dendrites = DendriteBuilder.BuildFromGene(Gene, 25, 3);
+        var Dendrites = DendriteBuilder.BuildFromGene(Gene, 25, 3, false);
         Assert.AreEqual(2, Dendrites.Count);
         Assert.AreEqual(3, Dendrites[0].SourceNeuronIndex);
         yield return null;
