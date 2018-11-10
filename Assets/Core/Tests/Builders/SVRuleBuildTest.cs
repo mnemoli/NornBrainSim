@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Collections;
 using UnityEngine.TestTools;
+using OpCode;
 
 public class SVRuleBuildTest
 {

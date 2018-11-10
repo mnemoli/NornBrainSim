@@ -10,6 +10,8 @@ public class NeuronInterpreter
         int Threshold = gene[12];
         int RestState = gene[14];
         int Leakage = gene[13];
-        return new NeuronGene(Threshold, RestState, Leakage);
+        RawGene SVRule = new RawGene(gene.GetRange(16, 12).ToArray());
+        var StateRule = SVRuleBuilder.Build(SVRuleInterpreter.Interpret(SVRule));
+        return new NeuronGene(Threshold, RestState, Leakage, StateRule);
     }
 }

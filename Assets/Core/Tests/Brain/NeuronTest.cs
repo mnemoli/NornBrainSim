@@ -9,7 +9,7 @@ public class NeuronTest
     [SetUp]
     public void CreateNeuron()
     {
-        var NeuronGene = new NeuronGene(100, 0, 0);
+        var NeuronGene = new NeuronGene(100, 0, 0, null);
         Neuron = new Neuron(0, NeuronGene);
     }
     [UnityTest]

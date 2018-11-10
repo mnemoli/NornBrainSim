@@ -1,14 +1,22 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace OpCode
 {
-    public class SixtyFour : IOpCode
+    public class Anded0 : IOpCode
     {
-        static bool Operator = false;
 
         public int Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
-            return 64;
+            if (data.d0.Any(d => d.GetValue() == 0))
+            {
+                return 0;
+            }
+            else
+            {
+                return Mathf.RoundToInt(data.d0.Sum(d => d.GetValue()));
+            }
         }
 
         public bool IsOperator()

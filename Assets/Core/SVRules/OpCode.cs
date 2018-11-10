@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 
-public interface OpCode
+namespace OpCode
 {
-    bool IsOperator();
-    int OperandsRequired();
-    int Evaluate(SVDataPacket data, List<OpCode> operands);
+    public interface IOpCode
+    {
+        bool IsOperator();
+        int OperandsRequired();
+        int Evaluate(SVDataPacket data, List<IOpCode> operands);
+    }
 }

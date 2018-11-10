@@ -1,20 +1,23 @@
 ﻿using System.Collections.Generic;
 
-public class End : OpCode
+namespace OpCode
 {
-
-    public int Evaluate(SVDataPacket data, List<OpCode> operands)
+    public class End : IOpCode
     {
-        throw new EndException();
-    }
 
-    public bool IsOperator()
-    {
-        return false;
-    }
+        public int Evaluate(SVDataPacket data, List<IOpCode> operands)
+        {
+            throw new EndException();
+        }
 
-    public int OperandsRequired()
-    {
-        return 0;
+        public bool IsOperator()
+        {
+            return false;
+        }
+
+        public int OperandsRequired()
+        {
+            return 0;
+        }
     }
 }

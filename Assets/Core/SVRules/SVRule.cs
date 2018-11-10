@@ -1,20 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using OpCode;
 
 public class SVRule {
 
-    public readonly List<OpCode> OpCodes;
+    public readonly List<IOpCode> OpCodes;
 
-    public SVRule(List<OpCode> opCodes)
+    public SVRule(List<IOpCode> opCodes)
     {
         OpCodes = opCodes;
     }
 
     public int Evaluate(SVDataPacket data)
     {
-        Stack<OpCode> operatorStack = new Stack<OpCode>();
-        Stack<OpCode> operandStack = new Stack<OpCode>();
+        Stack<IOpCode> operatorStack = new Stack<IOpCode>();
+        Stack<IOpCode> operandStack = new Stack<IOpCode>();
 
         try
         {
@@ -26,7 +27,7 @@ public class SVRule {
 
                     if (operatorStack.Count > 0 && operandStack.Count >= operatorStack.Peek().OperandsRequired())
                     {
-                        var Operands = new List<OpCode>();
+                        var Operands = new List<IOpCode>();
                         for (int i = 0; i < operatorStack.Peek().OperandsRequired(); i++)
                         {
                             Operands.Add(operandStack.Pop());
@@ -39,9 +40,9 @@ public class SVRule {
                 {
                     operandStack.Push(Op);
 
-                    if (operatorStack.Count > 0 && operatorStack.Peek().OperandsRequired() >= operandStack.Count)
+                    if (operatorStack.Count > 0 && (operandStack.Count >= operatorStack.Peek().OperandsRequired()))
                     {
-                        var Operands = new List<OpCode>();
+                        var Operands = new List<IOpCode>();
                         for (int i = 0; i < operatorStack.Peek().OperandsRequired(); i++)
                         {
                             Operands.Add(operandStack.Pop());
@@ -54,11 +55,11 @@ public class SVRule {
         }
         catch (EndNoValueException e)
         {
-            data.Result = 0;
+            return 0;
         }
         catch (EndException e)
         {
-            
+            return data.Result;
         }
         
         return data.Result;

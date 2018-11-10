@@ -2,23 +2,22 @@
 
 namespace OpCode
 {
-    public class SixtyFour : IOpCode
+    public class Random : IOpCode
     {
-        static bool Operator = false;
 
         public int Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
-            return 64;
+            return UnityEngine.Random.Range(operands[0].Evaluate(data, null), operands[1].Evaluate(data, null));
         }
 
         public bool IsOperator()
         {
-            return false;
+            return true;
         }
 
         public int OperandsRequired()
         {
-            return 0;
+            return 2;
         }
     }
 }

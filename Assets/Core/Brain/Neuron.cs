@@ -4,32 +4,15 @@ using System.Linq;
 using UnityEngine;
 
 public class Neuron {
-    private float value = 0;
-    public float Value {
-        get
-        {
-            return (value > Gene.Threshold) ? value : Gene.RestState;
-        }
-        private set
-        {
-            this.value = value;
-        }
-    }
-    public float RawValue
+    private float value;
+    public float Value
     {
         get
         {
-            return value;
+            return value > Gene.Threshold ? value : Gene.RestState;
         }
     }
-    private float input = 0;
-    public float Input
-    {
-        get
-        {
-            return input;
-        }
-    }
+    public float State { get; private set; }
     public int Index { get; private set; }
     public List<Dendrite> Dendrites0;
     public List<Dendrite> Dendrites1;
@@ -37,16 +20,18 @@ public class Neuron {
 
     public Neuron(int index, NeuronGene neuronGene)
     {
-        Value = neuronGene.RestState;
+        value = neuronGene.RestState;
+        State = neuronGene.RestState;
         Index = index;
         Gene = neuronGene;
     }
 
     public void Process()
     {
-        value = ProcessLeakage();
+        State = value;
+        value = ProcessStateRule();
 
-        if(Dendrites0 != null && Dendrites1 != null)
+        if (Dendrites0 != null && Dendrites1 != null)
         {
             foreach (var Dendrite in Dendrites0)
             {
@@ -56,9 +41,18 @@ public class Neuron {
             {
                 Dendrite.Process(this);
             }
-
-            //value = ProcessStateRule();
         }
+    }
+
+    private float ProcessStateRule()
+    {
+        SVDataPacket Data = new SVDataPacket
+        {
+            State = Mathf.RoundToInt(State),
+            d0 = Dendrites0,
+            d1 = Dendrites1
+        };
+        return Gene.SVRule.Evaluate(Data);
     }
 
     private float ProcessLeakage()
@@ -69,7 +63,7 @@ public class Neuron {
         }
         else
         {
-            return Relaxer.Relax(6, Gene.Leakage, value, Gene.RestState);
+            return Relaxer.Relax(6, Gene.Leakage, State, Gene.RestState);
         }
     }
 
@@ -85,6 +79,6 @@ public class Neuron {
 
     public void SetStrength(int strength)
     {
-        Value = strength;
+        value = strength;
     }
 }

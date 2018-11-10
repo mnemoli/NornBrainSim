@@ -1,20 +1,23 @@
 ﻿using System.Collections.Generic;
 
-public class Suscept : OpCode
+namespace OpCode
 {
-
-    public int Evaluate(SVDataPacket data, List<OpCode> operands)
+    public class Suscept : IOpCode
     {
-        return data.Susceptibility;
-    }
 
-    public bool IsOperator()
-    {
-        return false;
-    }
+        public int Evaluate(SVDataPacket data, List<IOpCode> operands)
+        {
+            return data.Susceptibility;
+        }
 
-    public int OperandsRequired()
-    {
-        return 0;
+        public bool IsOperator()
+        {
+            return false;
+        }
+
+        public int OperandsRequired()
+        {
+            return 0;
+        }
     }
 }

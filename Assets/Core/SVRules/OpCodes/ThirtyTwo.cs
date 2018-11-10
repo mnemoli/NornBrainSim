@@ -1,21 +1,24 @@
 ﻿using System.Collections.Generic;
 
-public class ThirtyTwo : OpCode
+namespace OpCode
 {
-    static bool Operator = false;
-
-    public int Evaluate(SVDataPacket data, List<OpCode> operands)
+    public class ThirtyTwo : IOpCode
     {
-        return 32;
-    }
+        static bool Operator = false;
 
-    public bool IsOperator()
-    {
-        return false;
-    }
+        public int Evaluate(SVDataPacket data, List<IOpCode> operands)
+        {
+            return 32;
+        }
 
-    public int OperandsRequired()
-    {
-        return 0;
+        public bool IsOperator()
+        {
+            return false;
+        }
+
+        public int OperandsRequired()
+        {
+            return 0;
+        }
     }
 }

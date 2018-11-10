@@ -1,20 +1,24 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
-public class Input : OpCode
+namespace OpCode
 {
-
-    public int Evaluate(SVDataPacket data, List<OpCode> operands)
+    public class Input : IOpCode
     {
-        return data.NeuronInput;
-    }
 
-    public bool IsOperator()
-    {
-        return false;
-    }
+        public int Evaluate(SVDataPacket data, List<IOpCode> operands)
+        {
+            return data.d0.Any(d => d.GetValue() > 0) || data.d1.Any(d => d.GetValue() > 0) ? 1 : 0;
+        }
 
-    public int OperandsRequired()
-    {
-        return 0;
+        public bool IsOperator()
+        {
+            return false;
+        }
+
+        public int OperandsRequired()
+        {
+            return 0;
+        }
     }
 }

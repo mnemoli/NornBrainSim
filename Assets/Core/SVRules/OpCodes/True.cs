@@ -1,27 +1,30 @@
 ﻿using System.Collections.Generic;
 
-public class True : OpCode
+namespace OpCode
 {
-
-    public int Evaluate(SVDataPacket data, List<OpCode> operands)
+    public class True : IOpCode
     {
-        if(data.Result > 0)
+
+        public int Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
-            return operands[0].Evaluate(data, null);
+            if (data.Result > 0)
+            {
+                return operands[0].Evaluate(data, null);
+            }
+            else
+            {
+                throw new EndNoValueException();
+            }
         }
-        else
+
+        public bool IsOperator()
         {
-            throw new EndNoValueException();
+            return true;
         }
-    }
 
-    public bool IsOperator()
-    {
-        return true;
-    }
-
-    public int OperandsRequired()
-    {
-        return 1;
+        public int OperandsRequired()
+        {
+            return 1;
+        }
     }
 }

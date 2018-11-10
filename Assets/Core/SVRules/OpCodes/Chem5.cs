@@ -2,13 +2,13 @@
 
 namespace OpCode
 {
-    public class SixtyFour : IOpCode
+    public class Chem5 : IOpCode
     {
-        static bool Operator = false;
 
         public int Evaluate(SVDataPacket data, List<IOpCode> operands)
         {
-            return 64;
+            //TODO
+            return 0;
         }
 
         public bool IsOperator()
