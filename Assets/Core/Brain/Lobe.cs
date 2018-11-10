@@ -7,7 +7,8 @@ using Random = UnityEngine.Random;
 
 public class Lobe {
 
-    public readonly BrainLobeType LobeID;
+    public readonly BrainLobeID LobeID;
+    public readonly Type NeuronEnumType;
     public readonly Vector2Int Location;
     public readonly Vector2Int Dimension;
     public int NumNeurons
@@ -16,9 +17,10 @@ public class Lobe {
     }
     private List<Neuron> Neurons;
 
-    public Lobe(BrainLobeType lobeID, Vector2Int location, Vector2Int dimension, List<Neuron> neurons)
+    public Lobe(BrainLobeID lobeID, Type neuronEnumType, Vector2Int location, Vector2Int dimension, List<Neuron> neurons)
     {
         LobeID = lobeID;
+        NeuronEnumType = neuronEnumType;
         Location = location;
         Dimension = dimension;
         Neurons = neurons;
@@ -32,9 +34,9 @@ public class Lobe {
         }
     }
 
-    public void FireNeuron(int neuronIndex)
+    public void FireNeuron(int neuronIndex, int amount = 255)
     {
-        Neurons[neuronIndex].SetStrength(255);
+        Neurons[neuronIndex].SetStrength(amount);
     }
 
     public Neuron GetFiringNeuron()
@@ -86,7 +88,7 @@ public class Lobe {
     {
         var Neuron = GetFiringNeuron();
         var NeuronIndex = (Neuron == null) ? -1 : Neuron.Index;
-        LobeRenderer.Render(Location, Dimension, typeof(StimulusGenus), NeuronIndex);
+        LobeRenderer.Render(Location, Dimension, NeuronEnumType, NeuronIndex);
     }
 
     public void RenderDendrites()

@@ -10,7 +10,7 @@ public class DendriteBuilderTest
     {
         public override Lobe LobeFromIndex(BrainLobeType index)
         {
-            return new Lobe(BrainLobeType.Attention, new Vector2Int(0, 0), new Vector2Int(0, 0), null);
+            return new Lobe(BrainLobeID.Attention, null, new Vector2Int(0, 0), new Vector2Int(0, 0), null);
         }
     }
 

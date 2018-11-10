@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class StimDropdown : MonoBehaviour {
 
     private Dropdown d;
+    public string EnumType;
+
     private Dropdown Dropdown
     {
         get
@@ -22,7 +24,7 @@ public class StimDropdown : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-       var x = Enumerable.AsEnumerable(Enum.GetNames(typeof(StimulusGenus))).Select(n => new Dropdown.OptionData(n)).ToList();
+       var x = Enumerable.AsEnumerable(Enum.GetNames(Type.GetType(EnumType))).Select(n => new Dropdown.OptionData(n)).ToList();
        Dropdown.options = x;
     }
 }

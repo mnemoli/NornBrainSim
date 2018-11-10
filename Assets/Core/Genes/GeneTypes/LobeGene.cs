@@ -2,7 +2,7 @@
 
 public class LobeGene : Gene
 {
-    public readonly BrainLobeType LobeID;
+    public readonly BrainLobeID LobeID;
     public readonly Vector2Int Location;
     public readonly Vector2Int Dimension;
     public readonly DendriteGene Dendrite0;
@@ -16,7 +16,7 @@ public class LobeGene : Gene
         }
     }
 
-    public LobeGene(BrainLobeType lobeID, Vector2Int location, Vector2Int dimension, DendriteGene dendrite0, DendriteGene dendrite1, NeuronGene neuronGene)
+    public LobeGene(BrainLobeID lobeID, Vector2Int location, Vector2Int dimension, DendriteGene dendrite0, DendriteGene dendrite1, NeuronGene neuronGene)
     {
         LobeID = lobeID;
         Location = location;

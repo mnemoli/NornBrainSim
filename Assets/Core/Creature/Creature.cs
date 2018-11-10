@@ -21,4 +21,24 @@ public class Creature : MonoBehaviour {
     {
         Brain.AddStimulus((StimulusGenus)stimulus);
     }
+
+    public void AddNoun(int noun)
+    {
+        Brain.AddNoun((StimulusGenus)noun);
+    }
+
+    public void AddVerb(int verb)
+    {
+        Brain.AddVerb((VerbGenus)verb);
+    }
+
+    public void AddDrive(int drive, int amount)
+    {
+        Brain.AddDrive((DriveGenus)drive, amount);
+    }
+
+    public void AddDrive(int drive)
+    {
+        Brain.AddDrive((DriveGenus)drive, 255);
+    }
 }

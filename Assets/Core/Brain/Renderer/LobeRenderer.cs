@@ -10,8 +10,12 @@ public class LobeRenderer {
     public static void Render(Vector2Int location, Vector2Int dimension, Type enumType, int enumValue)
     {
         var GUIRect = new Rect(location * CellSize, dimension * CellSize);
-        var LabelRect = new Rect(GUIRect.position + new Vector2(50, 0), new Vector2(200, 50));
+        if (enumType != null)
+        {
+            var LabelRect = new Rect(GUIRect.position + new Vector2(50, 0), new Vector2(200, 50));
+            GUI.Label(LabelRect, new GUIContent(Enum.GetName(enumType, enumValue)));
+        }
         GUI.Box(GUIRect, "");
-        GUI.Label(LabelRect, new GUIContent(Enum.GetName(enumType, enumValue)));
+        
     }
 }

@@ -42,6 +42,21 @@ public class Brain : MonoBehaviour {
         Lobes[(int)BrainLobeType.StimulusSource].FireNeuron((int)stimulus);
     }
 
+    public void AddNoun(StimulusGenus noun)
+    {
+        Lobes[(int)BrainLobeType.Noun].FireNeuron((int)noun);
+    }
+
+    public void AddVerb(VerbGenus verb)
+    {
+        Lobes[(int)BrainLobeType.Verb].FireNeuron((int)verb);
+    }
+
+    public void AddDrive(DriveGenus drive, int amount)
+    {
+        Lobes[(int)BrainLobeType.Drive].FireNeuron((int)drive, amount);
+    }
+
     public StimulusGenus GetHighestStimulus()
     {
         return (StimulusGenus)Lobes[(int)BrainLobeType.StimulusSource].GetFiringNeuron().Index;

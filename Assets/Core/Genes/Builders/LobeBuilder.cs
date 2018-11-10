@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,7 +9,26 @@ public class LobeBuilder {
     {
         var Neurons = Enumerable.Range(0, gene.Dimension.x * gene.Dimension.y).Select(n => new Neuron(n, gene.NeuronGene)).ToList();
         Neurons = SetUpDendrites(Neurons, gene.Dendrite0, gene.Dendrite1, numSourceNeurons0, numSourceNeurons1);
-        return new Lobe(gene.LobeID, gene.Location, gene.Dimension, Neurons);
+        Type NeuronEnumType = null;
+        switch(gene.LobeID)
+        {
+            case BrainLobeID.StimulusSource:
+                NeuronEnumType = typeof(StimulusGenus);
+                break;
+            case BrainLobeID.Drive:
+                NeuronEnumType = typeof(DriveGenus);
+                break;
+            case BrainLobeID.Verb:
+                NeuronEnumType = typeof(VerbGenus);
+                break;
+            case BrainLobeID.Noun:
+                NeuronEnumType = typeof(StimulusGenus);
+                break;
+            case BrainLobeID.Decision:
+                NeuronEnumType = typeof(VerbGenus);
+                break;
+        }
+        return new Lobe(gene.LobeID, NeuronEnumType, gene.Location, gene.Dimension, Neurons);
     }
 
     public static List<Neuron> SetUpDendrites(List<Neuron> neurons, DendriteGene d0, DendriteGene d1, int numSourceNeurons0, int numSourceNeurons1)
