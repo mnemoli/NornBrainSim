@@ -33,15 +33,22 @@ public class Neuron {
     {
         value = State;
         Profiler.BeginSample("Dendrites");
-        if (Dendrites0 != null && Dendrites1 != null)
+        if (Dendrites0 != null)
         {
+            var AnyDendriteLoose = Dendrites0.Any(d => Mathf.RoundToInt(d.Strength) == 0);
+            var AllDendritesLoose = Dendrites0.All(d => Mathf.RoundToInt(d.Strength) == 0);
             foreach (var Dendrite in Dendrites0)
             {
-                Dendrite.Process(this);
+                Dendrite.Process(this, AnyDendriteLoose, AllDendritesLoose);
             }
+        }
+        if (Dendrites1 != null)
+        {
+            var AnyDendriteLoose = Dendrites1.Any(d => Mathf.RoundToInt(d.Strength) == 0);
+            var AllDendritesLoose = Dendrites1.All(d => Mathf.RoundToInt(d.Strength) == 0);
             foreach (var Dendrite in Dendrites1)
             {
-                Dendrite.Process(this);
+                Dendrite.Process(this, AnyDendriteLoose, AllDendritesLoose);
             }
         }
         Profiler.EndSample();
@@ -100,22 +107,22 @@ public class Neuron {
     public bool AnyDendriteLoose(int type)
     {
         var DendriteType = type == 0 ? Dendrites0 : Dendrites1;
-        return DendriteType.Any(n => n.Strength == 0);
+        return DendriteType.Any(n => Mathf.RoundToInt(n.Strength) == 0);
     }
 
     public bool AllDendritesLoose(int type)
     {
         var DendriteType = type == 0 ? Dendrites0 : Dendrites1;
-        return DendriteType.All(n => n.Strength == 0);
+        return DendriteType.All(n => Mathf.RoundToInt(n.Strength) == 0);
     }
 
-    public bool CheckForExistingDriveDendrite()
+    public bool CheckForExistingDriveDendrite(int excludeThisSourceNeuron)
     {
-        return Dendrites0.Concat(Dendrites1).Any(n => n.SourceNeuronIndex < 15);
+        return Dendrites0.Concat(Dendrites1).Any(n => n.SourceNeuronIndex < 15 && n.SourceNeuronIndex != excludeThisSourceNeuron);
     }
 
-    public bool CheckForExistingVerbDendrite()
+    public bool CheckForExistingVerbDendrite(int excludeThisSourceNeuron)
     {
-        return Dendrites0.Concat(Dendrites1).Any(n => n.SourceNeuronIndex > 16 && n.SourceNeuronIndex < 31);
+        return Dendrites0.Concat(Dendrites1).Any(n => n.SourceNeuronIndex > 16 && n.SourceNeuronIndex < 31 && n.SourceNeuronIndex != excludeThisSourceNeuron);
     }
 }

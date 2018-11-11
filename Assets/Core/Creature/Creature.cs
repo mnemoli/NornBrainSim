@@ -41,4 +41,14 @@ public class Creature : MonoBehaviour {
     {
         Brain.AddDrive((DriveGenus)drive, 255);
     }
+
+    public void ToggleLobeRender(int lobeIndex)
+    {
+        Brain.ToggleRender(lobeIndex);
+    }
+
+    public void SetDecision(int decision)
+    {
+        Brain.SetDecision((VerbGenus)decision, 255);
+    }
 }

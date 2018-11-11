@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DendriteBuilder {
 
-	public static List<Dendrite> BuildFromGene(DendriteGene gene, int sourceLobeSize, int destinationCellIndex, bool sourceIsPerception)
+	public static List<Dendrite> BuildFromGene(DendriteGene gene, int sourceLobeSize, int destinationCellIndex)
     {
         List<Dendrite> Dendrites = new List<Dendrite>();
         // In C2, it appears that the spread doesn't really make any difference
@@ -20,7 +20,7 @@ public class DendriteBuilder {
             int SourceNeuronIndex = Random.Range(destinationCellIndex - gene.Fanout, destinationCellIndex + gene.Fanout) % sourceLobeSize;
             SourceNeuronIndex = (int)Mathf.Repeat(SourceNeuronIndex, sourceLobeSize);
             // Hard code perception lobe for now
-            if (sourceIsPerception)
+            if (gene.SourceLobeIndex == BrainLobeType.Perception)
             {
                 if (SourceNeuronIndex >= 0 && SourceNeuronIndex <= 15)
                 {
@@ -31,6 +31,10 @@ public class DendriteBuilder {
                 {
                     Dendrites.Add(new Dendrite(gene.SourceLobeIndex, SourceNeuronIndex, gene, !Verb));
                     Verb = true;
+                }
+                else
+                {
+                    Dendrites.Add(new Dendrite(gene.SourceLobeIndex, SourceNeuronIndex, gene));
                 }
             }
             else

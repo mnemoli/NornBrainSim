@@ -46,7 +46,7 @@ public class Dendrite  {
         return Strength > 0 ? value : 0;
     }
 
-    public void Process(Neuron owningNeuron = null)
+    public void Process(Neuron owningNeuron, bool anyDendriteLoose, bool allDendritesLoose)
     {
         RelaxLTWToSTW();
         RelaxSTWtoLTW();
@@ -55,7 +55,7 @@ public class Dendrite  {
         CalculateSTW(owningNeuron);
         value = SourceLobe.GetValueOfNeuronAndFire(SourceNeuronIndex) * (STW / STWModifier);
         CalculateStrength(owningNeuron);
-        Migrate(owningNeuron);
+        ProcessMigration(owningNeuron, anyDendriteLoose, allDendritesLoose);
     }
 
     private void RelaxLTWToSTW()
@@ -116,6 +116,7 @@ public class Dendrite  {
                 StrengthTemp = Relaxer.Relax(1, DendriteGene.Dynamics.StrengthGain, Strength, 0f);
             }
         }
+        Strength = StrengthTemp;
         Profiler.EndSample();
 
     }
@@ -135,7 +136,7 @@ public class Dendrite  {
         STW = LTW + (Susceptibility / 255) * Reinforcement;
     }
 
-    private void ProcessMigration(Neuron owningNeuron = null)
+    private void ProcessMigration(Neuron owningNeuron, bool anyDendriteLoose, bool allDendritesLoose)
     {
         if (owningNeuron == null || owningNeuron.Value <= owningNeuron.Gene.RestState)
             return;
@@ -144,10 +145,12 @@ public class Dendrite  {
             case 0:
                 return;
             case 1:
-                MigrateWhenAny(owningNeuron);
+                if(anyDendriteLoose)
+                    MigrateWhenAny(owningNeuron);
                 break;
             case 2:
-                MigrateWhenAll(owningNeuron);
+                if(allDendritesLoose)
+                    MigrateWhenAll(owningNeuron);
                 break;
         }
     }
@@ -171,15 +174,14 @@ public class Dendrite  {
     private void Migrate(Neuron owningNeuron)
     {
         // Hard coding for perception lobe
-        int SourceNeuronIndex = Random.Range(owningNeuron.Index - DendriteGene.Fanout, owningNeuron.Index + DendriteGene.Fanout) % SourceLobe.NumNeurons;
-        SourceNeuronIndex = (int)Mathf.Repeat(SourceNeuronIndex, SourceLobe.NumNeurons);
+        int SourceNeuronIndex = Random.Range(0, SourceLobe.NumNeurons - 1);
         if (SourceLobe.LobeID == BrainLobeID.Perception)
         {
-            if (SourceNeuronIndex > 0 && SourceNeuronIndex <= 15 && owningNeuron.CheckForExistingDriveDendrite())
+            if (SourceNeuronIndex > 0 && SourceNeuronIndex <= 15 && owningNeuron.CheckForExistingDriveDendrite(this.SourceNeuronIndex))
             {
 
             }
-            else if (SourceNeuronIndex >= 16 && SourceNeuronIndex <= 31 && owningNeuron.CheckForExistingVerbDendrite())
+            else if (SourceNeuronIndex >= 16 && SourceNeuronIndex <= 31 && owningNeuron.CheckForExistingVerbDendrite(this.SourceNeuronIndex))
             {
 
             }
@@ -188,6 +190,11 @@ public class Dendrite  {
                 this.SourceNeuronIndex = SourceNeuronIndex;
                 Strength = DendriteGene.InitialStrength;
             }
+        }
+        else
+        {
+            this.SourceNeuronIndex = SourceNeuronIndex;
+            Strength = DendriteGene.InitialStrength;
         }
     }
 }

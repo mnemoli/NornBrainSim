@@ -32,7 +32,7 @@ public class DendriteTest
         // i.e. 10 times a second
         foreach(var i in Enumerable.Range(0, 5))
         {
-            Dendrite.Process();
+            Dendrite.Process(null, false, false);
         }
         Assert.AreEqual(1, Mathf.RoundToInt(Dendrite.LTW));
 
@@ -53,7 +53,7 @@ public class DendriteTest
         // i.e. 10 times a second
         foreach (var i in Enumerable.Range(0, 10))
         {
-            Dendrite.Process();
+            Dendrite.Process(null, false,false);
         }
         Assert.AreEqual(End, Mathf.RoundToInt(Dendrite.LTW));
 

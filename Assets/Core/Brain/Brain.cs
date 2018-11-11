@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Brain : MonoBehaviour {
     private List<Lobe> Lobes = new List<Lobe>();
+    private List<Lobe> RenderableLobes;
     public int NumLobes
     {
         get
@@ -17,6 +18,7 @@ public class Brain : MonoBehaviour {
     public void FixedUpdate()
     {
         Lobes.ForEach(l => l.Process());
+        AddDrive(DriveGenus.Pain, 255);
     }
 
     public virtual Lobe LobeFromIndex(BrainLobeType index)
@@ -38,6 +40,7 @@ public class Brain : MonoBehaviour {
             }
             Lobe.SetUpDendrites(this);
         }
+        RenderableLobes = new List<Lobe>(Lobes);
     }
 
     public void AddLobe(Lobe lobe)
@@ -48,6 +51,11 @@ public class Brain : MonoBehaviour {
     public void AddStimulus(StimulusGenus stimulus)
     {
         Lobes[(int)BrainLobeType.StimulusSource].CopyToNeuron((int)stimulus);
+    }
+
+    public void SetDecision(VerbGenus decision, int amount)
+    {
+        Lobes[(int)BrainLobeType.Decision].FireNeuron((int)decision);
     }
 
     public void AddNoun(StimulusGenus noun)
@@ -80,9 +88,22 @@ public class Brain : MonoBehaviour {
 
     public void OnRenderObject()
     {
-        foreach (var Record in Lobes)
+        foreach (var Record in RenderableLobes)
         {
             Record.RenderDendrites();
+        }
+    }
+
+    public void ToggleRender(int LobeIndex)
+    {
+        var Lobe = Lobes[LobeIndex];
+        if (RenderableLobes.Contains(Lobe))
+        {
+            RenderableLobes.Remove(Lobe);
+        }
+        else
+        {
+            RenderableLobes.Add(Lobe);
         }
     }
 }

@@ -136,19 +136,19 @@ public class Lobe {
         {
             if (Neuron.Dendrites0 != null)
             {
-                foreach (var Dendrite0 in Neuron.Dendrites0)
+                foreach (var Dendrite0 in Neuron.Dendrites0.Where(d => d.Strength > 0))
                 {
                     DendriteRenderer.Render(0, Dendrite0.SourceLobe.Location, Dendrite0.SourceLobe.Dimension, Dendrite0.SourceNeuronIndex, Location, Dimension, Neuron.Index);
                 }
             }
-            if(Neuron.Dendrites1 != null)
+            if (Neuron.Dendrites1 != null)
             {
-                foreach (var Dendrite1 in Neuron.Dendrites1)
+                foreach (var Dendrite1 in Neuron.Dendrites1.Where(d => d.Strength > 0))
                 {
                     DendriteRenderer.Render(1, Dendrite1.SourceLobe.Location, Dendrite1.SourceLobe.Dimension, Dendrite1.SourceNeuronIndex, Location, Dimension, Neuron.Index);
                 }
             }
-            
+
         }
     }
 }

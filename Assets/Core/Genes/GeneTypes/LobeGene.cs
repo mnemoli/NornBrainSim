@@ -35,7 +35,7 @@ public class LobeGene : Gene
         Dendrite0 = dendrite0;
         Dendrite1 = dendrite1;
         NeuronGene = neuronGene;
-        CopyToPerceptionLobe = copyToPerceptionLobe == 1 ? true : false;
+        CopyToPerceptionLobe = copyToPerceptionLobe > 0 ? true : false;
         WinnerTakesAll = winnerTakesAll == 1 ? true : false;
     }
 }
