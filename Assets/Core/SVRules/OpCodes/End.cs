@@ -4,10 +4,9 @@ namespace OpCode
 {
     public class End : IOpCode
     {
-        private readonly static EndException Excpt = new EndException();
         override public float Evaluate(SVDataPacket data)
         {
-            throw Excpt;
+            return 0;
         }
 
         override public bool IsOperator()

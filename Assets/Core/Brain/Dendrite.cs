@@ -49,8 +49,10 @@ public class Dendrite  {
     public void Process(Neuron owningNeuron = null)
     {
         RelaxLTWToSTW();
+        RelaxSTWtoLTW();
         RelaxSusceptibility();
         CalculateSusceptibility(owningNeuron);
+        CalculateSTW(owningNeuron);
         value = SourceLobe.GetValueOfNeuronAndFire(SourceNeuronIndex) * (STW / STWModifier);
         CalculateStrength(owningNeuron);
         Migrate(owningNeuron);
@@ -59,6 +61,11 @@ public class Dendrite  {
     private void RelaxLTWToSTW()
     {
         LTW = Relaxer.Relax(RelaxationModifier, DendriteGene.Dynamics.LTWGainRate, LTW, STW);
+    }
+
+    private void RelaxSTWtoLTW()
+    {
+        STW = Relaxer.Relax(RelaxationModifier, DendriteGene.Dynamics.STWGainRate, STW, LTW);
     }
 
     private void RelaxSusceptibility()
@@ -113,9 +120,24 @@ public class Dendrite  {
 
     }
 
+    private void CalculateSTW(Neuron owningNeuron)
+    {
+        SVDataPacket.Susceptibility = Susceptibility;
+        SVDataPacket.NeuronOutput = owningNeuron.Value;
+        SVDataPacket.State = owningNeuron.State;
+        SVDataPacket.STW = STW;
+
+        var Reinforcement = DendriteGene.Dynamics.ReinforcementRule.Evaluate(SVDataPacket);
+        if(Reinforcement == 0)
+        {
+            Reinforcement = 1;
+        }
+        STW = LTW + (Susceptibility / 255) * Reinforcement;
+    }
+
     private void ProcessMigration(Neuron owningNeuron = null)
     {
-        if (owningNeuron == null)
+        if (owningNeuron == null || owningNeuron.Value <= owningNeuron.Gene.RestState)
             return;
         switch(DendriteGene.Dynamics.MigrateWhen)
         {

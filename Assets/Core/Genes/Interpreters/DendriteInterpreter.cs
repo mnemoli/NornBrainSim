@@ -19,6 +19,7 @@ public class DendriteInterpreter {
             Vector2Int LTWRange = new Vector2Int(gene[Offset + 5], gene[Offset + 6]);
             Vector2Int StrengthRange = new Vector2Int(gene[Offset + 7], gene[Offset + 8]);
             int LTWGainRate = gene[Offset + 12];
+            int STWGainRate = gene[Offset + 11];
             int SusceptibilityRelaxRate = gene[Offset + 10];
             RawGene SusceptRule = new RawGene(gene.GetRange(Offset + 39, 12).ToArray());
             var SusceptibilitySVRule = SVRuleBuilder.Build(SVRuleInterpreter.Interpret(SusceptRule));
@@ -28,9 +29,11 @@ public class DendriteInterpreter {
             var StrengthLoss = gene[Offset + 26];
             StrengthRule = new RawGene(gene.GetRange(Offset + 27, 12).ToArray());
             var StrengthLossSVRule = SVRuleBuilder.Build(SVRuleInterpreter.Interpret(StrengthRule));
+            var ReinforcementRule = new RawGene(gene.GetRange(Offset + 51, 12).ToArray());
+            var ReinforcementSVRule = SVRuleBuilder.Build(SVRuleInterpreter.Interpret(ReinforcementRule));
             var MigrateWhen = gene[Offset + 9];
 
-            var DendriteDynamics = new DendriteDynamicsGene(LTWGainRate, SusceptibilityRelaxRate, SusceptibilitySVRule, StrengthGain, StrengthSVRule, StrengthLoss, StrengthLossSVRule, MigrateWhen);
+            var DendriteDynamics = new DendriteDynamicsGene(LTWGainRate, STWGainRate, SusceptibilityRelaxRate, SusceptibilitySVRule, StrengthGain, StrengthSVRule, StrengthLoss, StrengthLossSVRule, ReinforcementSVRule, MigrateWhen);
 
             Genes.Add(new DendriteGene(i, SourceLobeIndex, Spread, Fanout, DendriteRange, LTWRange, StrengthRange, DendriteDynamics));
         }
