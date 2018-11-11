@@ -46,4 +46,26 @@ public class SVRuleTest
 
         yield return null;
     }
+    [UnityTest]
+    public IEnumerator FailTrue()
+    {
+        var SV = new SVRule(new List<IOpCode>
+        {
+            new Output(),
+            new True(),
+            new Suscept(),
+            new MoveTowards(),
+            new TwoFiveFive(),
+            new SixtyFour()
+        });
+        var DataPacket = new SVDataPacket
+        {
+            NeuronOutput = 0,
+            Susceptibility = 1
+        };
+        var Result = SV.Evaluate(DataPacket);
+        Assert.AreEqual(0, Mathf.RoundToInt(Result));
+
+        yield return null;
+    }
 }

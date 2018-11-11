@@ -5,18 +5,15 @@ namespace OpCode
 {
     public class True : IOpCode
     {
-
-        private readonly static EndNoValueException Excpt = new EndNoValueException();
-
         override public float Evaluate(SVDataPacket data)
         {
             if(Children[0].Evaluate(data) > 0)
             {
-                return 1;
+                return Children[1].Evaluate(data);
             }
             else
             {
-                throw Excpt;
+                return 0;
             }
         }
 
@@ -27,7 +24,7 @@ namespace OpCode
 
         override public int OperandsRequired()
         {
-            return 1;
+            return 2;
         }
     }
 }

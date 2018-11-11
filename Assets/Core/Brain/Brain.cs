@@ -80,7 +80,7 @@ public class Brain : MonoBehaviour {
 
     public void OnRenderObject()
     {
-        foreach(var Record in Lobes)
+        foreach (var Record in Lobes)
         {
             Record.RenderDendrites();
         }

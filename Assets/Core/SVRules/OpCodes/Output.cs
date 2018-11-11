@@ -17,7 +17,7 @@ namespace OpCode
 
         override public int OperandsRequired()
         {
-            return 0;
+            return -1;
         }
     }
 }

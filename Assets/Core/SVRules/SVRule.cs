@@ -39,14 +39,7 @@ public class SVRule {
             {
                 var Op = Operators.Pop();
                 Op.Children = Enumerable.Range(0, Op.OperandsRequired()).Select(i => Operands.Pop()).Reverse().ToList();
-                if(Code.GetType() == typeof(True))
-                {
-                    Outputs.Push(Op);
-                }
-                else
-                {
-                    Operands.Push(Op);
-                }
+                Operands.Push(Op);
             }
         }
         if (Outputs.Count > 0)
@@ -68,14 +61,9 @@ public class SVRule {
         {
             return 0;
         }
-        try
+        else
         {
             return Head.Evaluate(data);
         }
-        catch(EndNoValueException)
-        {
-            return 0;
-        }
-        
     }
 }
