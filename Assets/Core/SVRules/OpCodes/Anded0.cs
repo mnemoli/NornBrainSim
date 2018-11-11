@@ -8,7 +8,7 @@ namespace OpCode
     public class Anded0 : IOpCode
     {
 
-        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
+        override public float Evaluate(SVDataPacket data)
         {
             if (data.d0.Any(d => d.GetValue() == 0))
             {
@@ -21,12 +21,12 @@ namespace OpCode
             }
         }
 
-        public bool IsOperator()
+        override public bool IsOperator()
         {
             return false;
         }
 
-        public int OperandsRequired()
+        override public int OperandsRequired()
         {
             return 0;
         }

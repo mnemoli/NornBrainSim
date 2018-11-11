@@ -6,22 +6,22 @@ namespace OpCode
     public class MoveTowards : IOpCode
     {
 
-        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
+        override public float Evaluate(SVDataPacket data)
         {
             Profiler.BeginSample("move towards");
-            var Op0 = operands[0].Evaluate(data, null);
-            var Op1 = operands[1].Evaluate(data, null);
-            var Op2 = operands[2].Evaluate(data, null);
+            var Op0 = Children[0].Evaluate(data);
+            var Op1 = Children[1].Evaluate(data);
+            var Op2 = Children[2].Evaluate(data);
             Profiler.EndSample();
             return Op0 + (Op1 - Op0) / (Op1 / Op2);
         }
 
-        public bool IsOperator()
+        override public bool IsOperator()
         {
             return true;
         }
 
-        public int OperandsRequired()
+        override public int OperandsRequired()
         {
             return 3;
         }

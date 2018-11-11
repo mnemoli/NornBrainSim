@@ -6,7 +6,7 @@ namespace OpCode
     public class Input : IOpCode
     {
 
-        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
+        override public float Evaluate(SVDataPacket data)
         {
             bool d0 = false;
             bool d1 = false;
@@ -21,12 +21,12 @@ namespace OpCode
             return (d0 || d1) ? 1 : 0;
         }
 
-        public bool IsOperator()
+        override public bool IsOperator()
         {
             return false;
         }
 
-        public int OperandsRequired()
+        override public int OperandsRequired()
         {
             return 0;
         }

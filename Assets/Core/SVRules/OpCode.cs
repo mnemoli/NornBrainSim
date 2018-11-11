@@ -2,10 +2,12 @@
 
 namespace OpCode
 {
-    public interface IOpCode
+    public abstract class IOpCode
     {
-        bool IsOperator();
-        int OperandsRequired();
-        float Evaluate(SVDataPacket data, List<IOpCode> operands);
+        public List<IOpCode> Children;
+        
+        public abstract bool IsOperator();
+        public abstract int OperandsRequired();
+        public abstract float Evaluate(SVDataPacket data);
     }
 }

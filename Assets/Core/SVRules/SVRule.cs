@@ -3,112 +3,79 @@ using System.Collections.Generic;
 using UnityEngine;
 using OpCode;
 using UnityEngine.Profiling;
+using System.Linq;
 
 public class SVRule {
      
     public readonly List<IOpCode> OpCodes;
-    private Stack<IOpCode> operatorStack = new Stack<IOpCode>(8);
-    private Stack<IOpCode> operandStack = new Stack<IOpCode>(8);
-    private List<IOpCode> Operands = new List<IOpCode>(3);
-    private readonly Result Result = new Result();
+    public readonly IOpCode Head;
 
     public SVRule(List<IOpCode> opCodes)
     {
-        OpCodes = opCodes;
+        if(opCodes.First().GetType() == typeof(End))
+        {
+            Head = opCodes.First();
+            return;
+        }
+        Stack<IOpCode> Operators = new Stack<IOpCode>();
+        Stack<IOpCode> Operands = new Stack<IOpCode>();
+        Stack<IOpCode> Outputs = new Stack<IOpCode>();
+
+        foreach (var Code in opCodes)
+        {
+            if(Code.GetType() == typeof(End))
+            {
+                break;
+            }
+            if(!Code.IsOperator())
+            {
+                Operands.Push(Code);
+            }
+            else
+            {
+                Operators.Push(Code);
+            }
+            if(Operators.Count > 0 && Operands.Count >= Operators.Peek().OperandsRequired())
+            {
+                var Op = Operators.Pop();
+                Op.Children = Enumerable.Range(0, Op.OperandsRequired()).Select(i => Operands.Pop()).Reverse().ToList();
+                if(Code.GetType() == typeof(True))
+                {
+                    Outputs.Push(Op);
+                }
+                else
+                {
+                    Operands.Push(Op);
+                }
+            }
+        }
+        if (Outputs.Count > 0)
+        {
+            Head = new Evaluator
+            {
+                Children = Outputs.Concat(Operands).ToList()
+            };
+        }
+        else
+        {
+             Head = Operands.Pop();
+        }
     }
 
     public float Evaluate(SVDataPacket data)
     {
-        operatorStack.Clear();
-        operandStack.Clear();
-        try
+        if(Head.GetType() == typeof(End))
         {
-            foreach (var Op in OpCodes)
-            {
-                if(Op.GetType() == typeof(End))
-                {
-                    goto FinishStack;
-                }
-                if (Op.IsOperator())
-                {
-                    Profiler.BeginSample("operator");
-                    operatorStack.Push(Op);
-
-                    if (operatorStack.Count > 0 && operandStack.Count >= operatorStack.Peek().OperandsRequired())
-                    {
-                        Operands.Clear();
-                        for (int i = 0; i < operatorStack.Peek().OperandsRequired(); i++)
-                        {
-                            Profiler.BeginSample("Adding operands");
-                            Operands.Add(operandStack.Pop());
-                            Profiler.EndSample();
-                        }
-                        data.Result = operatorStack.Pop().Evaluate(data, Operands);
-                        operandStack.Push(Result);
-                    }
-                    Profiler.EndSample();
-                }
-                else
-                {
-                    Profiler.BeginSample("operand");
-                    operandStack.Push(Op);
-
-                    Profiler.BeginSample("Loop");
-                    if (operatorStack.Count > 0 && (operandStack.Count >= operatorStack.Peek().OperandsRequired()))
-                    {
-                        Profiler.BeginSample("Inside loop");
-                        Operands.Clear();
-                        for (int i = 0; i < operatorStack.Peek().OperandsRequired(); i++)
-                        {
-                            Profiler.BeginSample("Adding operands");
-                            Operands.Add(operandStack.Pop());
-                            Profiler.EndSample();
-                        }
-                        Profiler.EndSample();
-                        Profiler.BeginSample("Begin eval");
-                        data.Result = operatorStack.Pop().Evaluate(data, Operands);
-                        operandStack.Push(Result);
-                        Profiler.EndSample();
-                    }
-                    Profiler.EndSample();
-                    Profiler.EndSample();
-                }
-            }
-        }
-        catch (EndNoValueException e)
-        {
-            Profiler.EndSample();
-            Profiler.EndSample();
-            Profiler.EndSample();
             return 0;
         }
-        catch (EndException e)
+        try
         {
-            Profiler.EndSample();
-            Profiler.EndSample();
-            Profiler.EndSample();
-            return data.Result;
+            return Head.Evaluate(data);
         }
-
-    FinishStack:
-        if (operandStack.Count > 0)
+        catch(EndNoValueException)
         {
-            // Get the first result off the stack and use it as the result
-            // This will normally be an end operand or a Result
-            try
-            {
-                return operandStack.Pop().Evaluate(data, null);
-            }
-            catch (EndNoValueException e)
-            {
-                return 0;
-            }
-            catch (EndException e)
-            {
-                return data.Result;
-            }
+            return 0;
         }
         
-        return data.Result;
     }
 }

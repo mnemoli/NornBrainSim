@@ -103,14 +103,14 @@ public class Dendrite  {
         if(Strength > 0)
         {
             var StrengthLossCheck = DendriteGene.Dynamics.StrengthLossSVRule.Evaluate(SVDataPacket);
-            Profiler.EndSample();
 
             if (StrengthLossCheck > 0)
             {
                 StrengthTemp = Relaxer.Relax(1, DendriteGene.Dynamics.StrengthGain, Strength, 0f);
             }
         }
-        
+        Profiler.EndSample();
+
     }
 
     private void ProcessMigration(Neuron owningNeuron = null)

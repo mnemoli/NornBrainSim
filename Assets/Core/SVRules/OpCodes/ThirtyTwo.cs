@@ -6,17 +6,17 @@ namespace OpCode
     {
         static bool Operator = false;
 
-        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
+        override public float Evaluate(SVDataPacket data)
         {
             return 32;
         }
 
-        public bool IsOperator()
+        override public bool IsOperator()
         {
             return false;
         }
 
-        public int OperandsRequired()
+        override public int OperandsRequired()
         {
             return 0;
         }

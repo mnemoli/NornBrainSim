@@ -2,22 +2,26 @@
 
 namespace OpCode
 {
-    public class Suscept : IOpCode
+    public class Evaluator : IOpCode
     {
-
         override public float Evaluate(SVDataPacket data)
         {
-            return data.Susceptibility;
+            float Result = 0;
+            foreach(var Code in Children)
+            {
+                Result = Code.Evaluate(data);
+            }
+            return Result;
         }
 
         override public bool IsOperator()
         {
-            return false;
+            return true;
         }
 
         override public int OperandsRequired()
         {
-            return 0;
+            return 2;
         }
     }
 }

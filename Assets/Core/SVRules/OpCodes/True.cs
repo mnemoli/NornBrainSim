@@ -8,29 +8,26 @@ namespace OpCode
 
         private readonly static EndNoValueException Excpt = new EndNoValueException();
 
-        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
+        override public float Evaluate(SVDataPacket data)
         {
-            Profiler.BeginSample("True");
-            if(operands[0].Evaluate(data, null) > 0)
+            if(Children[0].Evaluate(data) > 0)
             {
-                Profiler.EndSample();
-                return operands[1].Evaluate(data, null);
+                return 1;
             }
             else
             {
-                Profiler.EndSample();
                 throw Excpt;
             }
         }
 
-        public bool IsOperator()
+        override public bool IsOperator()
         {
             return true;
         }
 
-        public int OperandsRequired()
+        override public int OperandsRequired()
         {
-            return 2;
+            return 1;
         }
     }
 }

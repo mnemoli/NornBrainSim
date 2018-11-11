@@ -24,4 +24,26 @@ public class SVRuleTest
 
         yield return null;
     }
+    [UnityTest]
+    public IEnumerator Susceptibility()
+    {
+        var SV = new SVRule(new List<IOpCode>
+        {
+            new Output(),
+            new True(),
+            new Suscept(),
+            new MoveTowards(),
+            new TwoFiveFive(),
+            new SixtyFour()
+        });
+        var DataPacket = new SVDataPacket
+        {
+            NeuronOutput = 1,
+            Susceptibility = 1
+        };
+        var Result = SV.Evaluate(DataPacket);
+        Assert.AreEqual(65, Mathf.RoundToInt(Result));
+
+        yield return null;
+    }
 }

@@ -5,17 +5,17 @@ namespace OpCode
     public class Plus : IOpCode
     {
 
-        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
+        override public float Evaluate(SVDataPacket data)
         {
-            return operands[0].Evaluate(data, null) + operands[1].Evaluate(data, null);
+            return Children[0].Evaluate(data) + Children[1].Evaluate(data);
         }
 
-        public bool IsOperator()
+        override public bool IsOperator()
         {
             return true;
         }
 
-        public int OperandsRequired()
+        override public int OperandsRequired()
         {
             return 2;
         }

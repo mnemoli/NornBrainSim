@@ -5,17 +5,17 @@ namespace OpCode
     public class Random : IOpCode
     {
 
-        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
+        override public float Evaluate(SVDataPacket data)
         {
-            return UnityEngine.Random.Range(operands[0].Evaluate(data, null), operands[1].Evaluate(data, null));
+            return UnityEngine.Random.Range(Children[0].Evaluate(data), Children[1].Evaluate(data));
         }
 
-        public bool IsOperator()
+        override public bool IsOperator()
         {
             return true;
         }
 
-        public int OperandsRequired()
+        override public int OperandsRequired()
         {
             return 2;
         }

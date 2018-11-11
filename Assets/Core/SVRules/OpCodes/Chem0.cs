@@ -5,18 +5,18 @@ namespace OpCode
     public class Chem0 : IOpCode
     {
 
-        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
+        override public float Evaluate(SVDataPacket data)
         {
             //TODO
             return 0;
         }
 
-        public bool IsOperator()
+        public override bool IsOperator()
         {
             return false;
         }
 
-        public int OperandsRequired()
+        override public int OperandsRequired()
         {
             return 0;
         }

@@ -5,17 +5,17 @@ namespace OpCode
     public class Decr : IOpCode
     {
 
-        public float Evaluate(SVDataPacket data, List<IOpCode> operands)
+        override public float Evaluate(SVDataPacket data)
         {
-            return operands[0].Evaluate(data, null) - 1;
+            return Children[0].Evaluate(data) - 1;
         }
 
-        public bool IsOperator()
+        override public bool IsOperator()
         {
             return true;
         }
 
-        public int OperandsRequired()
+        override public int OperandsRequired()
         {
             return 1;
         }
